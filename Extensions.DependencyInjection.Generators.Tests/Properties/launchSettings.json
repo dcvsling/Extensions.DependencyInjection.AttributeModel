@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "Extensions.DependencyInjection.Generators.Tests": {
+      "commandName": "Project"
+    }
+  }
+}

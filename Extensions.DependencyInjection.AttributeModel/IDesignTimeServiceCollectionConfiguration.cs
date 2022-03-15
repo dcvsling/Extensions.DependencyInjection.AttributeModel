@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Extensions.DependencyInjection.AttributeModel;
+namespace Extensions.DependencyInjection;
 
 public interface IDesignTimeServiceCollectionConfiguration
 {

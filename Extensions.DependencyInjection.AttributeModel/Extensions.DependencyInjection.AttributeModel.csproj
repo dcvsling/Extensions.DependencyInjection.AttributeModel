@@ -1,12 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageOutputPath>..\.artifacts\</PackageOutputPath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Nullable>enable</Nullable>
+		<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
+	</PropertyGroup>
+
 	<ItemGroup>
-		<AnalyzerReference Include="..\Extensions.DependencyInjection.Generators\Extensions.DependencyInjection.Generators.csproj" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0-preview.1.22076.8" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
 	</ItemGroup>
+
+	
+	<ItemGroup>
+		<ProjectReference Include="..\Extensions.DependencyInjection.Generators\Extensions.DependencyInjection.Generators.csproj">
+			<PrivateAssets>all</PrivateAssets>
+			<ReferenceOutputAssembly>True</ReferenceOutputAssembly>
+		</ProjectReference>
+	</ItemGroup>
+	<ItemGroup Label="Pack">
+		<None Include="$(OutputPath)Extensions.DependencyInjection.Generators.dll">
+			<PackagePath>analyzers/dotnet/cs</PackagePath>
+			<Pack>true</Pack>
+		</None>
+	</ItemGroup>
+	
 </Project>

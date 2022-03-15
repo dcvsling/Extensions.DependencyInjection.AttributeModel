@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Reflection;
 
-using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Extensions.DependencyInjection.AttributeModel;
+namespace Extensions.DependencyInjection;
 
 public static class AttributeBaseSourceGeneratorExtensions
 {

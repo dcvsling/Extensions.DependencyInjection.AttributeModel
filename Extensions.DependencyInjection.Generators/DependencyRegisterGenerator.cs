@@ -1,19 +1,41 @@
-﻿using Microsoft.CodeAnalysis;
+﻿
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace Extensions.DependencyInjection.Generators;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-[Generator]
-internal class DependencyRegisterGenerator : IIncrementalGenerator
+namespace Extensions.DependencyInjection.Generators
 {
-    
-    public void Initialize(IncrementalGeneratorInitializationContext context)
+    [Generator]
+    public partial class DependencyRegisterGenerator : IIncrementalGenerator
     {
-        var classDeclarations = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                Generators.HasLifetimeAttrbute, 
-                Generators.FindAttributeSyntaxs)
-            .Where(static m => m is not null);
-        var complierWithClass = context.CompilationProvider.Combine(classDeclarations.Collect());
-        context.RegisterSourceOutput(complierWithClass, Generators.GenerateOutput);
+
+        public void Initialize(IncrementalGeneratorInitializationContext context)
+        {
+            var classDeclarations = context.SyntaxProvider
+                .CreateSyntaxProvider(
+                    (syntax, _) => syntax is ClassDeclarationSyntax,
+                    (ctx, _) => ctx.Node is ClassDeclarationSyntax classSyntax
+                        && classSyntax.GetInjectAttributeSyntax() is IEnumerable<AttributeSyntax> attrs
+                            ? attrs.Select(attr => new InjectMetadata(attr, classSyntax))
+                            : Enumerable.Empty<InjectMetadata>())
+                    .SelectMany((x, _) => x);
+            var complierWithClass = context.CompilationProvider.Combine(classDeclarations.Collect());
+            context.RegisterSourceOutput(complierWithClass, (ctx, src) =>
+            {
+                try
+                {
+                    (var name, var text) = src.Right.GenerateOutput(src.Left.Assembly.Name, ctx.ReportDiagnostic);
+                    ctx.AddSource(name, text);
+                }
+                catch (Exception ex)
+                {
+                    ctx.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DIGEN00, null, ex));
+                }
+            });
+        }
     }
 }
+
