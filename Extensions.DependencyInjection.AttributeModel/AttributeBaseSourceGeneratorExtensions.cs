@@ -2,7 +2,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Extensions.DependencyInjection;
+namespace Extensions.DependencyInjection.AttributeModel;
 
 public static class AttributeBaseSourceGeneratorExtensions
 {
