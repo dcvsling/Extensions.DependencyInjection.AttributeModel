@@ -1,17 +1,31 @@
 # Extensions.DependencyInjection.AttributeModel
 
-## Â²¤¶
+[![Build Status](https://dev.azure.com/dcvsling/DotNetPlugins/_apis/build/status/Extensions.DependencyInjection.AttributeModel?branchName=master)](https://dev.azure.com/dcvsling/DotNetPlugins/_build/latest?definitionId=20&branchName=master)
 
-³o¬O¥H ```Microsoft.Extensions.DependencyInjection``` ¬°¥D­n DI ®e¾¹
-¨Ã¥B³z¹L Attribute ¨Ó³]©wª`¤J¤è¦¡
 
-## ¨Ï¥Î¤è¦¡
+## ç°¡ä»‹
 
-### ¦w¸Ë
+é€™æ˜¯ä»¥ ```Microsoft.Extensions.DependencyInjection``` ç‚ºä¸»è¦ DI å®¹å™¨
+ä¸¦ä¸”é€é Attribute ä¾†è¨­å®šæ³¨å…¥æ–¹å¼
 
-### ¨Ï¥Î
+## ä½¿ç”¨æ–¹å¼
 
-¤@¯ëÃş§O®w¶È»İ­n³z¹L¥H ```Lifetime``` ¬°¦WªºÄİ©Ê¹ïÃş§O¸Ë¹¢§Y¥i
+### å®‰è£
+
+åœ¨å®‰è£çš„å°ˆæ¡ˆç›®éŒ„ä¸‹è¼¸å…¥æŒ‡ä»¤
+```cmd
+dotnet add package Extensions.DependencyInjection.AttributeModel -s https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json
+```
+
+æˆ–æ˜¯é€é visual studio åŠ å…¥ä¸‹æ–¹é€£çµåˆ° nuget ä¾†æºå°±å¯ä»¥é€éå…§å»ºçš„å·¥å…·æœå°‹
+```url
+https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json
+```
+æ¥è‘—è«‹å®‰è£ ```Extensions.DependencyInjection.AttributeModel``` å³å¯
+
+### ä½¿ç”¨
+
+ä¸€èˆ¬é¡åˆ¥åº«åƒ…éœ€è¦é€éä»¥ ```Lifetime``` ç‚ºåçš„å±¬æ€§å°é¡åˆ¥è£é£¾å³å¯
 ```csharp
 [Singleton]
 public class SingletonService {}
@@ -23,63 +37,63 @@ public class ScopedService : IScoped {}
 public class TransientService<T> : ITransient<T> { }
 ```
 
-¨Ã¥B©ó³Ì¥½ºİªº±M®× ¨Ò¦p: Web±M®× 
-©ó¸Ó±M®×¤¤µù¥U DI ®e¾¹ªº¦a¤è¥[¤W¤U­±³o¬q
-¦¹³B¥H AspNetCore Web ±M®×¤¤ªº Startup.ConfigureService ¬°¨Ò
+ä¸¦ä¸”æ–¼æœ€æœ«ç«¯çš„å°ˆæ¡ˆ ä¾‹å¦‚: Webå°ˆæ¡ˆ 
+æ–¼è©²å°ˆæ¡ˆä¸­è¨»å†Š DI å®¹å™¨çš„åœ°æ–¹åŠ ä¸Šä¸‹é¢é€™æ®µ
+æ­¤è™•ä»¥ AspNetCore Web å°ˆæ¡ˆä¸­çš„ Startup.ConfigureService ç‚ºä¾‹
 
 ```csharp
 public void ConfigureService(IServiceCollection services)
 {
-	// ¥[¤W³o¦æ§Y¥i
+	// åŠ ä¸Šé€™è¡Œå³å¯
 	services.AddAttributeModelRegister();
 }
 ```
 
-## ¹B§@¤è¦¡
+## é‹ä½œæ–¹å¼
 
-### ¬yµ{
+### æµç¨‹
 
-Â²³æ»¡©ú¤@¤U¨ä¤º³¡¹B§@¤è¦¡ (it's not magic)
+ç°¡å–®èªªæ˜ä¸€ä¸‹å…¶å…§éƒ¨é‹ä½œæ–¹å¼ (it's not magic)
 
-1. ¹B¥Î SourceGenerator ¤¤ªº¤ÀªR¾¹¤ÀªR Attribute ¨Ã±N¨äÂà´«¦¨¬°¬Û¹ïÀ³ªº®e¾¹µù¥Uªºµ{¦¡½X
-1. ±N²£¥Íªºµ{¦¡½X¼g¦b¤@­Ó¥Ñ·í¤U AssemblyId ªº Namespace ¤U¦W¬° ServiceRegistryAttribute ªºÃş§O¤¤
-1. ±N¸ÓÃş§OÄ~©Ó Attribute ¨Ã¥B©ó Assembly ¯Å§O¤Wª½±µ«Å§i¸Ó Attribute
-1. ³Ì«á ```AddAttributeModelRegister``` ´N¬O¦b©Ò¦³¸ü¤Jªº Assembly
-¤¤§ä¥X©Ò¦³ªº ServiceRegistryAttribute ¨Ã¥B±N IServiceCollection ±a¤J¨Ã§¹¦¨µù¥U
+1. é‹ç”¨ SourceGenerator ä¸­çš„åˆ†æå™¨åˆ†æ Attribute ä¸¦å°‡å…¶è½‰æ›æˆç‚ºç›¸å°æ‡‰çš„å®¹å™¨è¨»å†Šçš„ç¨‹å¼ç¢¼
+1. å°‡ç”¢ç”Ÿçš„ç¨‹å¼ç¢¼å¯«åœ¨ä¸€å€‹ç”±ç•¶ä¸‹ AssemblyId çš„ Namespace ä¸‹åç‚º ServiceRegistryAttribute çš„é¡åˆ¥ä¸­
+1. å°‡è©²é¡åˆ¥ç¹¼æ‰¿ Attribute ä¸¦ä¸”æ–¼ Assembly ç´šåˆ¥ä¸Šç›´æ¥å®£å‘Šè©² Attribute
+1. æœ€å¾Œ ```AddAttributeModelRegister``` å°±æ˜¯åœ¨æ‰€æœ‰è¼‰å…¥çš„ Assembly
+ä¸­æ‰¾å‡ºæ‰€æœ‰çš„ ServiceRegistryAttribute ä¸¦ä¸”å°‡ IServiceCollection å¸¶å…¥ä¸¦å®Œæˆè¨»å†Š
 
-### ÀuÂI
+### å„ªé»
 
-- ¤@¯ë Attribute Ãş«¬ªº°µªk³£¥²¶·³z¹L©ó°õ¦æ¶¥¬q¥h±½´y©Ò¦³ªºÃş«¬,  
-¦Ó³z¹L SourceGenerator «h¬O¦b³]­p¶¥¬q´N§¹¦¨©Ò»İ­nªºµù¥Uµ{¦¡½X,  
-©ó°õ¦æ¶¥¬q¶È·j´M¨ì Assembly Level ªº Attribute,  
-±Ò°Ê®Éªº®Ä¯à¥i¥H¦n«Ü¦h
-- ¥Ñ©ó dotnet ¤º«Øªº DI ®e¾¹´X¥G¬O¨S¦³¶}©ñÂX®iªº,  
-¦]¦¹¦pªG·Q­n¹ê²{¤ñ¸û¯S®íªº¼Ò¦¡ (ex: ¸Ë¹¢¾¹¼Ò¦¡),
-·|ÅÜ±o²§±`ªº§xÃø©Î¬O½ÆÂø,
-³z¹L ³]­p¶¥¬qªº Attribute ¨Ó¹ê²{µù¥Uµ¥¦P©óÃB¥~´£¨Ñ¤F¤@­Ó­«·s³]­pªºµù¥U¤è¦¡ªºªÅ¶¡,  
-¦]¦¹¥i¥H¤j´T«×ªº¥[±j¨ä¥iÂX®i©Ê  
-~~(¦ı§ÚÁÙ¨S¹ê²{³o¥ó¨Æ±¡ orz)~~
+- ä¸€èˆ¬ Attribute é¡å‹çš„åšæ³•éƒ½å¿…é ˆé€éæ–¼åŸ·è¡Œéšæ®µå»æƒææ‰€æœ‰çš„é¡å‹,  
+è€Œé€é SourceGenerator å‰‡æ˜¯åœ¨è¨­è¨ˆéšæ®µå°±å®Œæˆæ‰€éœ€è¦çš„è¨»å†Šç¨‹å¼ç¢¼,  
+æ–¼åŸ·è¡Œéšæ®µåƒ…æœå°‹åˆ° Assembly Level çš„ Attribute,  
+å•Ÿå‹•æ™‚çš„æ•ˆèƒ½å¯ä»¥å¥½å¾ˆå¤š
+- ç”±æ–¼ dotnet å…§å»ºçš„ DI å®¹å™¨å¹¾ä¹æ˜¯æ²’æœ‰é–‹æ”¾æ“´å±•çš„,  
+å› æ­¤å¦‚æœæƒ³è¦å¯¦ç¾æ¯”è¼ƒç‰¹æ®Šçš„æ¨¡å¼ (ex: è£é£¾å™¨æ¨¡å¼),
+æœƒè®Šå¾—ç•°å¸¸çš„å›°é›£æˆ–æ˜¯è¤‡é›œ,
+é€é è¨­è¨ˆéšæ®µçš„ Attribute ä¾†å¯¦ç¾è¨»å†Šç­‰åŒæ–¼é¡å¤–æä¾›äº†ä¸€å€‹é‡æ–°è¨­è¨ˆçš„è¨»å†Šæ–¹å¼çš„ç©ºé–“,  
+å› æ­¤å¯ä»¥å¤§å¹…åº¦çš„åŠ å¼·å…¶å¯æ“´å±•æ€§  
+~~(ä½†æˆ‘é‚„æ²’å¯¦ç¾é€™ä»¶äº‹æƒ… orz)~~
 
-### ¯ÊÂI
+### ç¼ºé»
 
-- ¦]¬° Attribute µLªk¨Ï¥Î «D const ªº°Ñ¼Æ  
-¦]¦¹¦b¥²¶·³z¹L¤èªkªº¹ê²{µù¥Uªº®×¨Ò¤¤  
-¨º¨Ç¤èªk¸Ó©ñ¦b­ş¸ÌÅÜ±o¦³ÂIÀª§¼  
-¤£¹L¥Ñ©ó dotnet ªº DI µù¥U¤è¦¡¤w¸gºÉ¥i¯à¦aÁ×§K³o¥ó¨Æ±¡µo¥Í
-¥H¤Î¥Ø«e¤]¤w¸g¹ê²{¤@ºØ°µªk¨Ó´£¨Ñ³o³¡¤Àªº»İ¨D
+- å› ç‚º Attribute ç„¡æ³•ä½¿ç”¨ é const çš„åƒæ•¸  
+å› æ­¤åœ¨å¿…é ˆé€éæ–¹æ³•çš„å¯¦ç¾è¨»å†Šçš„æ¡ˆä¾‹ä¸­  
+é‚£äº›æ–¹æ³•è©²æ”¾åœ¨å“ªè£¡è®Šå¾—æœ‰é»å°·å°¬  
+ä¸éç”±æ–¼ dotnet çš„ DI è¨»å†Šæ–¹å¼å·²ç¶“ç›¡å¯èƒ½åœ°é¿å…é€™ä»¶äº‹æƒ…ç™¼ç”Ÿ
+ä»¥åŠç›®å‰ä¹Ÿå·²ç¶“å¯¦ç¾ä¸€ç¨®åšæ³•ä¾†æä¾›é€™éƒ¨åˆ†çš„éœ€æ±‚
 
 ### Hint
 
-©Ò¦³µù¥U®e¾¹©Ò¨Ï¥Îªº¦U¦¡¦Û©w¸qªº¤èªk  
-³£Â÷¤£¶}³Ìªì´£¨Ñªº¨º´X­Óµù¥U¤è¦¡
-¨Ò¦p:
+æ‰€æœ‰è¨»å†Šå®¹å™¨æ‰€ä½¿ç”¨çš„å„å¼è‡ªå®šç¾©çš„æ–¹æ³•  
+éƒ½é›¢ä¸é–‹æœ€åˆæä¾›çš„é‚£å¹¾å€‹è¨»å†Šæ–¹å¼
+ä¾‹å¦‚:
 ```csharp
 services.Configure<MyOptions>(options => configuration.Bind(options));
 ```
-¹ê»Ú¤W¥L­I«áµ{¦¡½X½Ğ°Ñ¦Ò³sµ²
+å¯¦éš›ä¸Šä»–èƒŒå¾Œç¨‹å¼ç¢¼è«‹åƒè€ƒé€£çµ
 [source](https://github.com/dotnet/runtime/blob/main/src/libraries/Microsoft.Extensions.Options.ConfigurationExtensions/src/OptionsConfigurationServiceCollectionExtensions.cs#L67)
-³z¹L­ì©l½Xµo²{¥L¬O¥Î¤@­Ó class ¸Ë¸ü¨º¬q lambda ¨Ã¥Bµù¥U¬° IConfigureOptions ¥H¤Î Singleton 
-¦]¦¹³z¹L¤U­±°µªk¤]¥i¥H¹F¨ì¤@¼Ëªº®ÄªG
+é€éåŸå§‹ç¢¼ç™¼ç¾ä»–æ˜¯ç”¨ä¸€å€‹ class è£è¼‰é‚£æ®µ lambda ä¸¦ä¸”è¨»å†Šç‚º IConfigureOptions ä»¥åŠ Singleton 
+å› æ­¤é€éä¸‹é¢åšæ³•ä¹Ÿå¯ä»¥é”åˆ°ä¸€æ¨£çš„æ•ˆæœ
 ```csharp
 [Singleton(ServiceType = typeof(IConfigureOptions<MyOptions>))]
 public class MyOptionsConfigureOptions : IConfigureOptions<MyOptions> 
