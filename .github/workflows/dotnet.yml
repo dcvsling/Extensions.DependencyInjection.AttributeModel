@@ -26,4 +26,6 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Push Nupkg to Azure Artifacts
+      env: 
+        VSS_NUGET_EXTERNAL_FEED_ENDPOINTS: ${{ secrets.AZURE_DEVOPS_TOKEN }}
       run: dotnet nuget push --source "https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json" --api-key az "./.artifacts/*.nupkg"
