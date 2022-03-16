@@ -16,11 +16,13 @@ steps:
   - task: DotNetCoreCLI@2
     inputs:
       command: 'build'
-      projects: '**/**.csproj'
+      projects: 'Extensions.DependencyInjection.AttributeModel/
+Extensions.DependencyInjection.AttributeModel.csproj'
   - task: DotNetCoreCLI@2
     inputs:
       command: 'test'
-      projects: '**/**.csproj'
+      projects: '
+Extensions.DependencyInjection.AttributeModel.Tests/Extensions.DependencyInjection.AttributeModel.Tests.csproj'
   - task: DotNetCoreCLI@2
     inputs:
       command: 'push'
