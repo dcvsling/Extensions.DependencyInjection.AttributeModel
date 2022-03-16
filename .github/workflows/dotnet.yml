@@ -29,4 +29,4 @@ jobs:
         nupkg-path: './.artifacts/*.nupkg'
         repo-owner: 'dcvsling'
         gh-user: 'dcvsling'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.WORKFLOW_SECRET }}
