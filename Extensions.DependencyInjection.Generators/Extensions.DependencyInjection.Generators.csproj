@@ -2,15 +2,17 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<IsPackable>false</IsPackable>
-	</PropertyGroup>
-	<PropertyGroup Label="Pack">
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<BuildOutputTargetFolder>analyzers/dotnet/cs</BuildOutputTargetFolder>
+		<PackageOutputPath>..\.artifacts\</PackageOutputPath>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
+		<UsingToolXliff>true</UsingToolXliff>
 	</PropertyGroup>
 	<ItemGroup>
+		<AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
+		<AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.1.0" PrivateAssets="all" />
 	</ItemGroup>
-	
 </Project>

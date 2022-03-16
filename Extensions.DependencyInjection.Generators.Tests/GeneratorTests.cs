@@ -10,7 +10,7 @@ using System.Linq;
 using Xunit;
 
 namespace Extensions.DependencyInjection.Generators.Tests;
-public partial class SourceGeneratorTests
+public partial class GeneratorTests
 {
     [Theory]
     [MemberData("Singleton")]
@@ -36,6 +36,11 @@ public partial class SourceGeneratorTests
     [Theory]
     [MemberData("OpenGenericWithServiceType")]
     public void Generate_OpenGenericWithServiceType(IEnumerable<Module> modules, GenerateContext expect)
+        => TestBase(modules, expect);
+
+    [Theory]
+    [MemberData("LifetimeAttribute")]
+    public void Generate_LifetimeAttribute(IEnumerable<Module> modules, GenerateContext expect)
         => TestBase(modules, expect);
 
     private static void TestBase(IEnumerable<Module> modules, GenerateContext expect)

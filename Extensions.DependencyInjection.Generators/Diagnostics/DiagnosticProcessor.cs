@@ -12,10 +12,10 @@ namespace Extensions.DependencyInjection.Generators
     {
         private static readonly List<DiagnosticDelegate> _diags = new List<DiagnosticDelegate>
         {
-            DIGEN01.Valid,
-            DIGEN02.Valid,
-            DIGEN03.Valid,
-            DIGEN04.Valid
+            DG001.Valid,
+            DG002.Valid,
+            DG003.Valid,
+            DG004.Valid
         };
         public static void RegisterDiagnostic(DiagnosticDelegate @delegate)
             => _diags.Add(@delegate);

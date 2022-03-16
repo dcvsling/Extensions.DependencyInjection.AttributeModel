@@ -6,7 +6,7 @@ using System;
 
 namespace Extensions.DependencyInjection.Generators.Diagnostics
 {
-    public class DIGEN03
+    public class DG003
     {
         public static bool Valid(InjectMetadata metadata, Action<Diagnostic> callback)
            => ShouldValid(metadata)
@@ -20,7 +20,7 @@ namespace Extensions.DependencyInjection.Generators.Diagnostics
         private static bool SetDiagnostic(InjectMetadata metadata, Action<Diagnostic> callback)
         {
             callback(Diagnostic.Create(
-                DiagnosticDescriptors.DIGEN03,
+                DiagnosticDescriptors.DG003,
                 metadata.ClassSyntax.GetMemberByName(metadata.MemberName).GetLocation()));
             return true;
         }

@@ -32,7 +32,7 @@ namespace Extensions.DependencyInjection.Generators
                 }
                 catch (Exception ex)
                 {
-                    ctx.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DIGEN00, null, ex));
+                    ctx.ReportDiagnostic(Diagnostic.Create(DiagnosticDescriptors.DG000, null, ex));
                 }
             });
         }

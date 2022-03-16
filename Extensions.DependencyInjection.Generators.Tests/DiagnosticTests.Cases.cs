@@ -9,7 +9,7 @@ public partial class DiagnosticTests
 {
     public readonly static IEnumerable<object[]> DIGEN01 = new[] { new object[]
     {
-        new DiagnosticDescriptor[] { DiagnosticDescriptors.DIGEN01 },
+        new DiagnosticDescriptor?[] { DiagnosticDescriptors.DG001 },
         new Module[]
         {
             new Module("a.cs", "A.Models")
@@ -30,7 +30,7 @@ public partial class DiagnosticTests
 
     public readonly static IEnumerable<object[]> DIGEN02 = new[] { new object[]
     {
-        new DiagnosticDescriptor[] { DiagnosticDescriptors.DIGEN02 },
+        new DiagnosticDescriptor[] { DiagnosticDescriptors.DG002 },
         new Module[]
         {
             new Module("a.cs", "A.Models")
@@ -56,7 +56,7 @@ public partial class DiagnosticTests
 
     public readonly static IEnumerable<object[]> DIGEN03 = new[] { new object[]
     {
-        new DiagnosticDescriptor[] { DiagnosticDescriptors.DIGEN03, DiagnosticDescriptors.DIGEN03 },
+        new DiagnosticDescriptor[] { DiagnosticDescriptors.DG003, DiagnosticDescriptors.DG003 },
         new Module[]
         {
             new Module("a.cs", "A.Models")
@@ -93,7 +93,7 @@ public partial class DiagnosticTests
 
     public readonly static IEnumerable<object[]> DIGEN04 = new[] { new object[]
     {
-        new DiagnosticDescriptor[] { DiagnosticDescriptors.DIGEN04 },
+        new DiagnosticDescriptor[] { DiagnosticDescriptors.DG004 },
         new Module[]
         {
             new Module("a.cs", "A.Models")

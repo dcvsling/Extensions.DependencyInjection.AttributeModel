@@ -89,10 +89,8 @@ namespace Extensions.DependencyInjection.Generators
         public static string GetName(this NamespaceDeclarationSyntax syntax)
             => syntax.Name.ToFullString().Trim();
 
-
-
         public static AttributeArgumentSyntax GetArgumentByName(this AttributeSyntax syntax, string name)
-        => syntax.ArgumentList.Arguments.FirstOrDefault(x => x.NameEquals.Name.Identifier.Text == name);
+            => syntax.ArgumentList?.Arguments.FirstOrDefault(x => x.NameEquals.Name.Identifier.Text == name);
         public static string UnwrapTypeOf(this string text)
             => text.StartsWith("typeof") ? text.Substring(7, text.Length - 8) : text;
 

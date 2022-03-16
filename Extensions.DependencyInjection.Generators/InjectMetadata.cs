@@ -19,7 +19,9 @@ namespace Extensions.DependencyInjection.Generators
             this.ClassSyntax = ClassSyntax;
         }
         public string Lifetime
-            => _lifetime = _lifetime ?? AttributeSyntax.GetArgumentByName(nameof(Lifetime)).Expression.ToFullString().Trim().Split(new string[] { "ServiceLifetime." }, System.StringSplitOptions.RemoveEmptyEntries).Last();
+            => _lifetime = _lifetime ?? (AttributeSyntax.Name.ToFullString().Trim().Split('.').Last().StartsWith("Inject")
+                ? AttributeSyntax.GetArgumentByName(nameof(Lifetime)).Expression.ToFullString().Trim().Split(new string[] { "ServiceLifetime." }, System.StringSplitOptions.RemoveEmptyEntries).Last()
+                : _lifetime ?? AttributeSyntax.Name.ToFullString().Trim().Split('.').Last().Replace("Attribute", string.Empty));
         public string ServiceType
             => _serviceType = _serviceType ?? AttributeSyntax.GetArgumentByName(nameof(ServiceType))?.Expression.ToFullString().Trim().UnwrapTypeOf() ?? string.Empty;
         public string MemberName

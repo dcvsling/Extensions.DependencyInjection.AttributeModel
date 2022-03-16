@@ -30,5 +30,3 @@ jobs:
         repo-owner: 'dcvsling'
         gh-user: 'dcvsling'
         token: ${{ secrets.GITHUB_TOKEN }}
-        # skip publishing duplicated package(s)
-#         skip-duplicate: # default is true

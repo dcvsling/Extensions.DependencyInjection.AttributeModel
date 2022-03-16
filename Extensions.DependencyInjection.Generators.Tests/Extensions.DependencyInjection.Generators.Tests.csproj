@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+	  <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
 	  <LangVersion>preview</LangVersion>
     <IsPackable>false</IsPackable>
@@ -26,7 +26,6 @@
 	  <ProjectReference Include="..\Extensions.DependencyInjection.Generators\Extensions.DependencyInjection.Generators.csproj">
 		
 	  </ProjectReference>
-	  <ProjectReference Include="..\Extensions.DependencyInjection\Extensions.DependencyInjection.AttributeModel.csproj" />
   </ItemGroup>
 
 </Project>

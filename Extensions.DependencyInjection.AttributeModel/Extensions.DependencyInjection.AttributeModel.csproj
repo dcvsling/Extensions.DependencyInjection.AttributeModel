@@ -1,31 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+		<TargetFramework>netstandard2.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<PackageOutputPath>..\.artifacts\</PackageOutputPath>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
 	</ItemGroup>
 
-	
 	<ItemGroup>
 		<ProjectReference Include="..\Extensions.DependencyInjection.Generators\Extensions.DependencyInjection.Generators.csproj">
-			<PrivateAssets>all</PrivateAssets>
-			<ReferenceOutputAssembly>True</ReferenceOutputAssembly>
+			<OutputItemType>analyzer</OutputItemType>
 		</ProjectReference>
-	</ItemGroup>
-	<ItemGroup Label="Pack">
-		<None Include="$(OutputPath)Extensions.DependencyInjection.Generators.dll">
-			<PackagePath>analyzers/dotnet/cs</PackagePath>
-			<Pack>true</Pack>
-		</None>
 	</ItemGroup>
 	
 </Project>

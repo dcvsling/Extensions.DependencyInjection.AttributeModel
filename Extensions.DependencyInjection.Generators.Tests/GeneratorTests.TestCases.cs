@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace Extensions.DependencyInjection.Generators.Tests;
 
 
-public partial class SourceGeneratorTests
+public partial class GeneratorTests
 {
     public readonly static IEnumerable<object[]> Singleton = new[]
     {
@@ -279,6 +279,58 @@ public partial class SourceGeneratorTests
                     "services.AddSingleton(A.Instance);",
                     "services.AddScoped<IB>(B.Factory);",
                     "services.AddTransient(C.Factory);",
+                },
+                Usings = { "A.Models" },
+                Namespace = "A",
+                HintName = "a.cs"
+            }
+        }
+    };
+
+    public readonly static IEnumerable<object[]> LifetimeAttribute = new[]
+    {
+        new object[] {
+            new Module[]
+            {
+                new Module("a.cs", "A.Models")
+                {
+                    Interfaces =
+                    {
+                        new Interface("A"),
+                        new Interface("B"),
+                        new Interface("C")
+                    },
+                    Classes =
+                    {
+                        new Class("A")
+                        {
+                            Interfaces = { "IA" },
+                            CustomAttributes = { new CustomAttribute("Singleton") { Parameters = {
+                                    AttributeParameter.ServiceType("IA"),
+                                } } }
+                        },
+                        new Class("B")
+                        {
+                            Interfaces = { "IB" },
+                            CustomAttributes = { new CustomAttribute("Scoped") { Parameters = {
+                                    AttributeParameter.ServiceType("IB"),
+                                } } }
+                        },
+                        new Class("C")
+                        {
+                            Interfaces = { "IC" },
+                            CustomAttributes = { new CustomAttribute("Transient") { Parameters = {
+                                    AttributeParameter.ServiceType("IC"),
+                                } } }
+                        }
+                    }
+                }
+            },
+            new GenerateContext {
+                Sources = {
+                    "services.AddSingleton<IA, A>();",
+                    "services.AddScoped<IB, B>();",
+                    "services.AddTransient<IC, C>();",
                 },
                 Usings = { "A.Models" },
                 Namespace = "A",
