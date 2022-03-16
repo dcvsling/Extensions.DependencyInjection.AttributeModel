@@ -6,6 +6,7 @@
 		<PackageOutputPath>..\.artifacts\</PackageOutputPath>
 		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
 	</PropertyGroup>
 
