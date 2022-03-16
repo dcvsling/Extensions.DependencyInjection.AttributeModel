@@ -1,6 +1,6 @@
 # Extensions.DependencyInjection.AttributeModel
 
-[![Build Status](https://dev.azure.com/dcvsling/DotNetPlugins/_apis/build/status/Extensions.DependencyInjection.AttributeModel?branchName=master)](https://dev.azure.com/dcvsling/DotNetPlugins/_build/latest?definitionId=20&branchName=master)
+[![.NET](https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel/actions/workflows/dotnet.yml)
 
 
 ## 簡介
