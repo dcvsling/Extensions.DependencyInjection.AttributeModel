@@ -9,6 +9,9 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  version: '0.1.0-preview-$(Build.BuildNumber)'
+
 steps:
   - task: DotNetCoreCLI@2
     inputs:
