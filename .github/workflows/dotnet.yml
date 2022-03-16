@@ -17,19 +17,13 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
+    - name: setup azure artifacts 
+      run: wget -qO- https://aka.ms/install-artifacts-credprovider.sh | bash
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: auth github pack
-      run: dotnet nuget add source --username dcvsling --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/dcvsling/index.json"
-    - name: Push Nupkg to GitHub Packages
-      uses: tanaka-takayoshi/nuget-publish-to-github-packages-action@v2.1
-      with:
-        nupkg-path: './.artifacts/*.nupkg'
-        repo-owner: 'dcvsling'
-        gh-user: 'dcvsling'
-        token: ${{ secrets.GITHUB_TOKEN }}
-        
+    - name: Push Nupkg to Azure Artifacts
+      run: dotnet nuget push --source "https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json" --api-key az "./.artifacts/*.nupkg"
