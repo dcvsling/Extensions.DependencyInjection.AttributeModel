@@ -23,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+	  <ProjectReference Include="..\Extensions.DependencyInjection.AttributeModel\Extensions.DependencyInjection.AttributeModel.csproj">
+	    <Private>True</Private>
+	    <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+	  </ProjectReference>
 	  <ProjectReference Include="..\Extensions.DependencyInjection.Generators\Extensions.DependencyInjection.Generators.csproj">
 		
 	  </ProjectReference>
