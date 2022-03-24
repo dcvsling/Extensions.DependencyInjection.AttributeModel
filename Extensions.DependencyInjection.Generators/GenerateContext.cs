@@ -9,7 +9,14 @@ namespace Extensions.DependencyInjection.Generators
     {
         public string HintName { get; set; } = "ServiceRegistry.g.cs";
         public string Namespace { get; set; } = "Extensions.DependencyInjection.Generators";
-        public List<string> Usings { get; set; } = new List<string>();
+        public List<string> Usings { get; set; } = new List<string>
+        {
+            "System",
+            "System.Collections.Generic",
+            "System.Linq",
+            "System.Reflection",
+            "Microsoft.Extensions.DependencyInjection"
+        };
         public List<string> Sources { get; set; } = new List<string>();
         public static implicit operator SourceText(GenerateContext context)
             => SourceText.From(context.ToString(), Encoding.UTF8);
