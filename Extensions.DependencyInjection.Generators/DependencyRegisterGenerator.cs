@@ -27,6 +27,7 @@ namespace Extensions.DependencyInjection.Generators
             {
                 try
                 {
+                    if (src.Right.Length == 0) return;
                     (var name, var text) = src.Right.GenerateOutput(src.Left.Assembly.Name, ctx.ReportDiagnostic);
                     ctx.AddSource(name, text);
                 }

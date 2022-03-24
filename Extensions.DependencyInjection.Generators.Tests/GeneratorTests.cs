@@ -43,6 +43,12 @@ public partial class GeneratorTests
     public void Generate_LifetimeAttribute(IEnumerable<Module> modules, GenerateContext expect)
         => TestBase(modules, expect);
 
+    [Theory]
+    [MemberData("ExternalUsingDirectives")]
+    public void External_Using_Directives(IEnumerable<Module> modules, GenerateContext expect)
+        => TestBase(modules, expect);
+
+
     private static void TestBase(IEnumerable<Module> modules, GenerateContext expect)
     {
         var compiler = CSharpCompilation.Create(expect.Namespace, modules.Select(x => CSharpSyntaxTree.ParseText(x)));
