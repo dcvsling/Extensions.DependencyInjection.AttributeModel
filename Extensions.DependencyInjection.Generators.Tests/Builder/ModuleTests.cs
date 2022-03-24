@@ -26,9 +26,7 @@ public class ModuleTests
     };
 
     private const string _generatedModule = @"
-using System;
-using Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection;
+
 
 namespace MyLib.Models.Model1;
 
