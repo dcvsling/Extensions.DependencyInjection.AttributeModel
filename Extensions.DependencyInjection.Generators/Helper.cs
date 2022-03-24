@@ -44,14 +44,17 @@ namespace Extensions.DependencyInjection.Generators
                     new GenerateContext() { Namespace = assemblyName },
                     (ctx, content) =>
                     {
-                        ctx.Sources.Add(content.RegisterContent);
-                        ctx.Usings.Add(content.UsingContent);
+                        ctx.Sources.AddRange(content.RegisterContent);
+                        ctx.Usings.AddRange(content.UsingContent);
                         return ctx;
                     });
         }
         public static bool HasModifierByKinds(this SyntaxTokenList tokens, params SyntaxKind[] kinds)
                => tokens.Select(x => x.Kind()).Intersect(kinds).Count() == kinds.Length;
-
+        public static IEnumerable<T> Emit<T>(this T t)
+        {
+            yield return t;
+        }
         public static bool IsSingleton(this InjectMetadata metadata)
             => metadata.Lifetime == "Singleton";
         public static bool NotSingleton(this InjectMetadata metadata)

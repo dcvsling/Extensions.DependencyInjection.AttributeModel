@@ -9,11 +9,7 @@ namespace Extensions.DependencyInjection.Generators.Tests.Builder;
 
 public record Module(string Name, string Namespace)
 {
-    public ICollection<string> Usings { get; init; } = new List<string> {
-        "System",
-        "Extensions.DependencyInjection",
-        "Microsoft.Extensions.DependencyInjection"
-    };
+    public ICollection<string> Usings { get; init; } = new List<string>();
     public ICollection<Interface> Interfaces { get; init; } = new List<Interface>();
     public ICollection<Class> Classes { get; init; } = new List<Class>();
 

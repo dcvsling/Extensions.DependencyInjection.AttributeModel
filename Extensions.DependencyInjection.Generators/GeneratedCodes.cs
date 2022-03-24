@@ -12,11 +12,7 @@ namespace Extensions.DependencyInjection.Generators
     {
         public static SourceText CreateRegistryAttribute(GenerateContext context)
             => SourceText.From($@"
-using System;
-using Extensions.DependencyInjection.AttributeModel;
-using Microsoft.Extensions.DependencyInjection;
-
-{string.Join(Environment.NewLine, context.Usings.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().Select(x => $"using {x};"))}
+{string.Join(Environment.NewLine, context.Usings.Where(x => !string.IsNullOrWhiteSpace(x)).Distinct().OrderBy(x => x).Select(x => $"using {x};"))}
 
 [assembly: {context.Namespace}.ServiceRegistry]
 

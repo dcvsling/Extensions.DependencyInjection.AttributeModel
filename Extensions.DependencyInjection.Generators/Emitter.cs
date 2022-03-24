@@ -1,6 +1,8 @@
 ﻿using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 
 using System;
+using System.Linq;
 
 namespace Extensions.DependencyInjection.Generators
 {
@@ -14,7 +16,11 @@ namespace Extensions.DependencyInjection.Generators
         }
         public DependencyContent Emit(InjectMetadata metadata)
             => new DependencyContent(
-                    metadata.Namespace,
+                    metadata.ClassSyntax.SyntaxTree
+                        .GetCompilationUnitRoot()
+                        .Usings
+                        .Select(@using => @using.Name.ToString())
+                        .Concat(metadata.Namespace.Emit()),
                     metadata.Diagnostic(_reportDiag) is null
                         ? string.Empty
                         : ConditionServiceType(metadata));
