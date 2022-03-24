@@ -1,7 +1,4 @@
-﻿
-using Microsoft.Extensions.DependencyInjection;
-
-namespace Extensions.DependencyInjection.AttributeModel;
+﻿namespace Microsoft.Extensions.DependencyInjection;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
 public class InjectAttribute : Attribute

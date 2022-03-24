@@ -1,5 +1,6 @@
 using Extensions.DependencyInjection.Generators.Tests.Builder;
 
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
 using SourceGenerators.Tests;
@@ -51,10 +52,28 @@ public partial class GeneratorTests
 
     private static void TestBase(IEnumerable<Module> modules, GenerateContext expect)
     {
-        var compiler = CSharpCompilation.Create(expect.Namespace, modules.Select(x => CSharpSyntaxTree.ParseText(x)));
+        var trees = modules.Select(x => CSharpSyntaxTree.ParseText(x));
+        var compiler = CSharpCompilation.Create(expect.Namespace, trees);
         var generator = new DependencyRegisterGenerator();
         (var diags, var result) = RoslynTestUtils.RunGenerator(compiler, generator);
         Assert.Empty(diags);
         Assert.Equal(expect.ToString(), result[0].SourceText.ToString());
+        //CompileSource(trees.Concat(result.Select(x => CSharpSyntaxTree.ParseText(x.SourceText))));
     }
+
+    //private static void CompileSource(IEnumerable<SyntaxTree> trees)
+    //    => Assert.Empty(
+    //        CSharpCompilation.Create(
+    //        "testing",
+    //        trees,
+    //        new[] {
+    //            typeof(InjectAttribute),
+    //            typeof(object),
+    //            typeof(IServiceCollection),
+    //            typeof(Enumerable)
+    //        }.Select(type => MetadataReference.CreateFromFile(type.Assembly.Location))
+    //            .ToArray(),
+    //        new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
+    //            .WithMetadataReferenceResolver()
+    //            .GetDiagnostics());
 }
