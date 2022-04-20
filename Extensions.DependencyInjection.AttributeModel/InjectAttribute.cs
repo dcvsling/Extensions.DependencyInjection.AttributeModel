@@ -8,17 +8,7 @@ public class InjectAttribute : Attribute
     public virtual string? MemberName { get; set; }
 }
 
-[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
-
-public class SingletonAttribute : InjectAttribute
+public class DecoratorAttribute : InjectAttribute
 {
-    public override ServiceLifetime Lifetime { get; set; } = ServiceLifetime.Singleton;
-}
-public class ScopedAttribute : InjectAttribute
-{
-    public override ServiceLifetime Lifetime { get; set; } = ServiceLifetime.Scoped;
-}
-public class TransientAttribute : InjectAttribute
-{
-    public override ServiceLifetime Lifetime { get; set; } = ServiceLifetime.Transient;
+    
 }

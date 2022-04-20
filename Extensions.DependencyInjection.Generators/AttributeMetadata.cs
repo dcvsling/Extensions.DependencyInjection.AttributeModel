@@ -5,18 +5,18 @@ namespace Extensions.DependencyInjection.Generators
 {
 
 
-    public class InjectMetadata
+    public class AttributeMetadata
     {
+        private static readonly char[] TRIM_CHAR = new[] { ' ', '"' }; 
         private string _lifetime;
         private string _serviceType;
         private string _memberName;
         private string _implementationType;
         private string _namespace;
 
-        public InjectMetadata(AttributeSyntax AttributeSyntax, ClassDeclarationSyntax ClassSyntax)
+        public AttributeMetadata(AttributeSyntax AttributeSyntax)
         {
             this.AttributeSyntax = AttributeSyntax;
-            this.ClassSyntax = ClassSyntax;
         }
         public string Lifetime
             => _lifetime = _lifetime ?? (AttributeSyntax.Name.ToFullString().Trim().Split('.').Last().StartsWith("Inject")
@@ -25,7 +25,7 @@ namespace Extensions.DependencyInjection.Generators
         public string ServiceType
             => _serviceType = _serviceType ?? AttributeSyntax.GetArgumentByName(nameof(ServiceType))?.Expression.ToFullString().Trim().UnwrapTypeOf() ?? string.Empty;
         public string MemberName
-            => _memberName = _memberName ?? AttributeSyntax.GetArgumentByName(nameof(MemberName))?.Expression.ToFullString().Trim().Trim('"') ?? string.Empty;
+            => _memberName = _memberName ?? AttributeSyntax.GetArgumentByName(nameof(MemberName))?.Expression.ToFullString().Trim(TRIM_CHAR) ?? string.Empty;
         public string ImplementationType
             => _implementationType = _implementationType ?? ClassSyntax.Identifier.ValueText + (IsGenericType ? $"<{string.Join(string.Empty, Enumerable.Repeat(",", ClassSyntax.TypeParameterList.Parameters.Count - 1))}>" : string.Empty);
         public string Namespace
@@ -34,7 +34,7 @@ namespace Extensions.DependencyInjection.Generators
             => ClassSyntax.IsGenericType();
 
         public AttributeSyntax AttributeSyntax { get; }
-        public ClassDeclarationSyntax ClassSyntax { get; }
+        public ClassDeclarationSyntax ClassSyntax => AttributeSyntax.GetParentNode<ClassDeclarationSyntax>();
     }
 }
 

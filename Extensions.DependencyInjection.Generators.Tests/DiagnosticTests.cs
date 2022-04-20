@@ -14,19 +14,19 @@ namespace Extensions.DependencyInjection.Generators.Tests.Diagnostic;
 public partial class DiagnosticTests
 {
     [Theory]
-    [MemberData("DIGEN01")]
+    [MemberData(nameof(DIGEN01))]
     public void Generate_DIGEN01(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     [Theory]
-    [MemberData("DIGEN02")]
+    [MemberData(nameof(DIGEN02))]
     public void Generate_DIGEN02(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     [Theory]
-    [MemberData("DIGEN03")]
+    [MemberData(nameof(DIGEN03))]
     public void Generate_DIGEN03(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     [Theory]
-    [MemberData("DIGEN04")]
+    [MemberData(nameof(DIGEN04))]
     public void Generate_DIGEN04(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     private static void TestBase(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)

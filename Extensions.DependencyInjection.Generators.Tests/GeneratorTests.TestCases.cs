@@ -23,11 +23,10 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddSingleton<A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddSingleton<A>();" },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -48,11 +47,10 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddScoped<A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddScoped<A>();" },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -73,11 +71,10 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddTransient<A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddTransient<A>();" },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -124,15 +121,14 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = {
+            new StringSourceProvider {
+                Register = {
                     "services.AddSingleton<IA, A>();",
                     "services.AddScoped<IB, B>();",
-                    "services.AddTransient<IC, C>();",
+                    "services.AddTransient<IC, C>();"
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -143,15 +139,15 @@ public partial class GeneratorTests
             new Module[]
             {
                 new Module("a.cs", "A.Models")
-        {
-            Classes =
-                    {
-                new Class(new TypeName("A") { TypeParameters = { "T" } })
                 {
-                    CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
+                    Classes =
+                            {
+                        new Class(new TypeName("A") { TypeParameters = { "T" } })
+                        {
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
                                         AttributeParameter.Singleton,
                                     } } }
-                },
+                        },
                         new Class(new TypeName("B") { TypeParameters = { "T", "T2" } })
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
@@ -167,15 +163,15 @@ public partial class GeneratorTests
                     }
                 }
             },
-        new GenerateContext {
-                Sources = {
+        new StringSourceProvider {
+                Register = {
                     "services.AddSingleton(typeof(A<>));",
                     "services.AddScoped(typeof(B<,>));",
                     "services.AddTransient(typeof(C<,,>));",
+
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
     }
 };
@@ -222,15 +218,14 @@ public partial class GeneratorTests
                 }
             }
         },
-        new GenerateContext {
-                Sources = {
+        new StringSourceProvider {
+                Register = {
                     "services.AddSingleton(typeof(IA<>), typeof(A<>));",
                     "services.AddScoped(typeof(IB<,>), typeof(B<,>));",
-                    "services.AddTransient(typeof(IC<,,>), typeof(C<,,>));",
+                    "services.AddTransient(typeof(IC<,,>), typeof(C<,,>));"
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -274,15 +269,14 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = {
+            new StringSourceProvider {
+                Register = {
                     "services.AddSingleton(A.Instance);",
                     "services.AddScoped<IB>(B.Factory);",
-                    "services.AddTransient(C.Factory);",
+                    "services.AddTransient(C.Factory);"
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -326,15 +320,14 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = {
+            new StringSourceProvider {
+                Register = {
                     "services.AddSingleton<IA, A>();",
                     "services.AddScoped<IB, B>();",
-                    "services.AddTransient<IC, C>();",
+                    "services.AddTransient<IC, C>();",                    
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -364,11 +357,10 @@ public partial class GeneratorTests
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddSingleton<IB, A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddSingleton<IB, A>();" },
                 Usings = { "A.Models", "B.Abstractions" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };

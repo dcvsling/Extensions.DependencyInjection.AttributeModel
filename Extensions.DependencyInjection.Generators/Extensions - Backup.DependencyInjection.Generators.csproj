@@ -9,12 +9,13 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
 		<UsingToolXliff>true</UsingToolXliff>
-		<EnableNETAnalyzers>False</EnableNETAnalyzers>
-		<EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 	<ItemGroup>
 		<AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
 		<AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.2.0" PrivateAssets="all" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="DependencyInjection\NewFolder\" />
 	</ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Extensions.DependencyInjection.Generators
 {
-    public delegate bool DiagnosticDelegate(InjectMetadata metadata, Action<Diagnostic> callback);
+    public delegate bool DiagnosticDelegate(AttributeMetadata metadata, Action<Diagnostic> callback);
     public static class DiagnosticProcessor
     {
         private static readonly List<DiagnosticDelegate> _diags = new List<DiagnosticDelegate>
@@ -19,20 +19,16 @@ namespace Extensions.DependencyInjection.Generators
         };
         public static void RegisterDiagnostic(DiagnosticDelegate @delegate)
             => _diags.Add(@delegate);
-        public static InjectMetadata Diagnostic(this InjectMetadata metadata, Action<Diagnostic> reportDiag)
+        public static TResult Diagnostic<TResult>(this AttributeMetadata metadata, Func<IEnumerable<Diagnostic>, TResult> reportDiag, Func<AttributeMetadata, TResult> func)
         {
             var result = new List<Diagnostic>();
             foreach (var diag in _diags)
             {
                 diag(metadata, result.Add);
             }
-            if (result.Count > 0)
-            {
-                result.ForEach(reportDiag);
-                return default;
-            }
-            else
-                return metadata;
+            return result.Count > 0
+                ? reportDiag(result)
+                : func(metadata);
         }
     }
 }
