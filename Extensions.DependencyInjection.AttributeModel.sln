@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{36CECF64
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensions.DependencyInjection.AttributeModel.Tests", "Extensions.DependencyInjection.AttributeModel.Tests\Extensions.DependencyInjection.AttributeModel.Tests.csproj", "{5E31BB71-7135-4E50-98D7-6907C1EEA682}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{BBF622D3-8929-4CCF-AA0C-92CF9CF0B98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBF622D3-8929-4CCF-AA0C-92CF9CF0B98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBF622D3-8929-4CCF-AA0C-92CF9CF0B98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
