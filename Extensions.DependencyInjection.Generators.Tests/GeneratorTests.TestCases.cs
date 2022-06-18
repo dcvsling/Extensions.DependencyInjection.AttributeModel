@@ -364,4 +364,38 @@ public partial class GeneratorTests
             }
         }
     };
+    public static readonly IEnumerable<object[]> ExternalUsingDirectives = new[]
+    {
+        new object[] {
+            new Module[]
+            {
+                new Module("b.cs", "B.Abstractions")
+                {
+                    Interfaces = { new Interface("B") },
+                },
+                new Module("a.cs", "A.Models")
+                {
+                    Usings = { "B.Abstractions" },
+                    Classes =
+                    {
+                        new Class("A")
+                        {
+                            CustomAttributes = { new CustomAttribute("Inject") {
+                                Parameters = {
+                                    AttributeParameter.Singleton,
+                                    AttributeParameter.ServiceType("IB")
+                                } } },
+                            Interfaces = { "IB" }
+                        }
+                    }
+                }
+            },
+            new GenerateContext {
+                Sources = { "services.AddSingleton<IB, A>();" },
+                Usings = { "A.Models", "B.Abstractions" },
+                Namespace = "A",
+                HintName = "a.cs"
+            }
+        }
+    };
 }
