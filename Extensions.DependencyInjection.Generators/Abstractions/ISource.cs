@@ -1,7 +1,6 @@
 ﻿namespace Extensions.DependencyInjection.Generators.Abstractions
 {
-    public interface ISourceProvider
+    public interface ISource
     {
-        string ToString();
     }
 }

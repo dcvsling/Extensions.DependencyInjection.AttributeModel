@@ -2,5 +2,5 @@
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    public interface IUsing : ISourceProvider { }
+    public interface IUsing : ISource { }
 }

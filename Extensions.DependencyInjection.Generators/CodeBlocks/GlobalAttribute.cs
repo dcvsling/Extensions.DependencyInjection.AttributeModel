@@ -2,7 +2,7 @@
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal class GlobalAttribute : ISourceProvider
+    internal class GlobalAttribute : ISource
     {
         private readonly string _attributeFullName;
 

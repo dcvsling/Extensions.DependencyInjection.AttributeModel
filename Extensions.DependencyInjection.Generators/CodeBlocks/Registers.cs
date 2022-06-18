@@ -7,19 +7,19 @@ using System.Linq;
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal class Registers : SourceProviderCollectionBase<IRegister>, IRegister
+    internal class Registers : SourceProviderCollectionBase<ISource>, ISource
     {
-        private readonly IEnumerable<IRegister> _registers;
+        private readonly IEnumerable<ISource> _registers;
 
-        public Registers(IEnumerable<IRegister> registers)
+        public Registers(IEnumerable<ISource> registers)
         {
             _registers = registers;
         }
 
         public override string ToString()
-            => string.Join(Environment.NewLine + "            ", _registers.Distinct().Select(x => x.ToString()));
+            => string.Join(Environment.NewLine + "            ", _registers.Distinct());
 
-        public override IEnumerator<IRegister> GetEnumerator()
+        public override IEnumerator<ISource> GetEnumerator()
             => _registers.GetEnumerator();
     }
 }

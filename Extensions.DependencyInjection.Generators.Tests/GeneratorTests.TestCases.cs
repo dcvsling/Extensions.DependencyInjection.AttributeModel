@@ -18,7 +18,7 @@ public partial class GeneratorTests
                     {
                         new Class("A")
                         {
-                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { AttributeParameter.Singleton } } }
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { Parameter.Singleton } } }
                         }
                     }
                 }
@@ -42,7 +42,7 @@ public partial class GeneratorTests
                     {
                         new Class("A")
                         {
-                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { AttributeParameter.Scoped } } }
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { Parameter.Scoped } } }
                         }
                     }
                 }
@@ -66,7 +66,7 @@ public partial class GeneratorTests
                     {
                         new Class("A")
                         {
-                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { AttributeParameter.Transient } } }
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { Parameter.Transient } } }
                         }
                     }
                 }
@@ -98,24 +98,24 @@ public partial class GeneratorTests
                         {
                             Interfaces = { "IA" },
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Singleton,
-                                    AttributeParameter.ServiceType("IA"),
+                                    Parameter.Singleton,
+                                    Parameter.ServiceType("IA"),
                                 } } }
                         },
                         new Class("B")
                         {
                             Interfaces = { "IB" },
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Scoped,
-                                    AttributeParameter.ServiceType("IB"),
+                                    Parameter.Scoped,
+                                    Parameter.ServiceType("IB"),
                                 } } }
                         },
                         new Class("C")
                         {
                             Interfaces = { "IC" },
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Transient,
-                                    AttributeParameter.ServiceType("IC"),
+                                    Parameter.Transient,
+                                    Parameter.ServiceType("IC"),
                                 } } }
                         }
                     }
@@ -145,19 +145,19 @@ public partial class GeneratorTests
                         new Class(new TypeName("A") { TypeParameters = { "T" } })
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Singleton,
+                                        Parameter.Singleton,
                                     } } }
                         },
                         new Class(new TypeName("B") { TypeParameters = { "T", "T2" } })
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Scoped,
+                                        Parameter.Scoped,
                                     } } }
                         },
                         new Class(new TypeName("C") { TypeParameters = { "T", "T2", "T3" } })
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Transient,
+                                        Parameter.Transient,
                                     } } }
                         }
                     }
@@ -195,24 +195,24 @@ public partial class GeneratorTests
                     {
                         Interfaces = { "IA<T>" },
                         CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Singleton,
-                                    AttributeParameter.ServiceType("IA<>")
+                                    Parameter.Singleton,
+                                    Parameter.ServiceType("IA<>")
                                 } } }
                     },
                     new Class(new TypeName("B") { TypeParameters = { "T", "T2" } })
                     {
                         Interfaces = { "IB<T, T2>" },
                         CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Scoped,
-                                    AttributeParameter.ServiceType("IB<,>")
+                                    Parameter.Scoped,
+                                    Parameter.ServiceType("IB<,>")
                                 } } }
                     },
                     new Class(new TypeName("C") { TypeParameters = { "T", "T2", "T3" } })
                     {
                         Interfaces = { "IC<T, T2, T3>" },
                         CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Transient,
-                                    AttributeParameter.ServiceType("IC<,,>")
+                                    Parameter.Transient,
+                                    Parameter.ServiceType("IC<,,>")
                                 } } }
                     }
                 }
@@ -243,17 +243,17 @@ public partial class GeneratorTests
                         new Class("A")
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Singleton,
-                                        AttributeParameter.FromInstance,
+                                        Parameter.Singleton,
+                                        Parameter.FromInstance,
                                     } } },
                             Members = { Property.CreateInstance("A") }
                         },
                         new Class("B")
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Scoped,
-                                        AttributeParameter.ServiceType("IB"),
-                                        AttributeParameter.FromFactory,
+                                        Parameter.Scoped,
+                                        Parameter.ServiceType("IB"),
+                                        Parameter.FromFactory,
                                     } } },
                             Interfaces = { "IB" },
                             Members = { Method.CreateFactory("IB") }
@@ -261,8 +261,8 @@ public partial class GeneratorTests
                         new Class("C")
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Transient,
-                                        AttributeParameter.FromFactory,
+                                        Parameter.Transient,
+                                        Parameter.FromFactory,
                                     } } },
                             Members = { Method.CreateFactory("C") }
                         }
@@ -300,21 +300,21 @@ public partial class GeneratorTests
                         {
                             Interfaces = { "IA" },
                             CustomAttributes = { new CustomAttribute("Singleton") { Parameters = {
-                                    AttributeParameter.ServiceType("IA"),
+                                    Parameter.ServiceType("IA"),
                                 } } }
                         },
                         new Class("B")
                         {
                             Interfaces = { "IB" },
                             CustomAttributes = { new CustomAttribute("Scoped") { Parameters = {
-                                    AttributeParameter.ServiceType("IB"),
+                                    Parameter.ServiceType("IB"),
                                 } } }
                         },
                         new Class("C")
                         {
                             Interfaces = { "IC" },
                             CustomAttributes = { new CustomAttribute("Transient") { Parameters = {
-                                    AttributeParameter.ServiceType("IC"),
+                                    Parameter.ServiceType("IC"),
                                 } } }
                         }
                     }
@@ -349,8 +349,8 @@ public partial class GeneratorTests
                         {
                             CustomAttributes = { new CustomAttribute("Inject") {
                                 Parameters = {
-                                    AttributeParameter.Singleton,
-                                    AttributeParameter.ServiceType("IB")
+                                    Parameter.Singleton,
+                                    Parameter.ServiceType("IB")
                                 } } },
                             Interfaces = { "IB" }
                         }

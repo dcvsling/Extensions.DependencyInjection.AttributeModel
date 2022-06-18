@@ -1,5 +1,6 @@
 ﻿using Extensions.DependencyInjection.Generators.Abstractions;
 using Extensions.DependencyInjection.Generators.CodeBlocks;
+using Extensions.DependencyInjection.Generators.Render;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -12,69 +13,80 @@ namespace Extensions.DependencyInjection.Generators
 {
     public class Emitter
     {
-        public string HintName { get; set; } = Constant.DEFAULT_HINT_NAME;
-        public ISourceProvider Namespace { get; set; } = new Namespace(Constant.DEFAULT_NAMESPACE);
-        public List<ISourceProvider> Usings { get; }
-            = Constant.DEFAULT_USINGS.Select(x => new UsingFromString(x))
-                .OfType<ISourceProvider>()
-                .ToList();
-        private readonly Action<Diagnostic> _reportDiag;
-
-        public Emitter(Action<Diagnostic> reportDiag)
+        private readonly SourceProductionContext _context;
+        private readonly IDiagnosticProcessor _diagnostic;
+        private readonly ISourceProvider _sourceProvider;
+        public static Emitter Create(SourceProductionContext context) => new Emitter(context, Diagnostics.Diagnostics.Processor, Renderer.Instance);
+        public Emitter(SourceProductionContext context, IDiagnosticProcessor diagnostic, ISourceProvider sourceProvider)
         {
-            _reportDiag = reportDiag;
+            _context = context;
+            _diagnostic = diagnostic;
+            _sourceProvider = sourceProvider;
         }
-        public ISourceProvider GenerateOutput(string assemblyName, IEnumerable<AttributeMetadata> injects)
+        public string HintName { get; set; } = Constant.DEFAULT_HINT_NAME;
+        public ISource Namespace { get; set; } = new Namespace(Constant.DEFAULT_NAMESPACE);
+        public List<ISource> Usings { get; }
+            = Constant.DEFAULT_USINGS.Select(x => new Using(x))
+                .OfType<ISource>()
+                .ToList();
+
+        public ISource GenerateOutput(string assemblyName, IEnumerable<AttributeMetadata> injects)
         {
             (var usings, var register) = injects.Select(Emit)
                 .OfType<GeneratorSource>()
                 .Aggregate(
-                    (usings: Enumerable.Empty<IUsing>(), register: Enumerable.Empty<IRegister>()),
-                    (ctx, content) => (usings: ctx.usings.Union(content.Using), register: ctx.register.Append<IRegister>(content.Register)));
+                    (usings: Enumerable.Empty<ISource>(), register: Enumerable.Empty<ISource>()),
+                    (ctx, content) => (
+                        usings: ctx.usings.Union(content.Using),
+                        register: ctx.register.Append<ISource>(content.Register)));
             return new ServiceRegisterSourceProvider
             {
+                AttributeName = Constant.DEFAULT_REGISTER_ATTRIBUTE_NAME,
+                InterfaceName = Constant.INJECT_ATTRIBUTE_INTERFACE_NAME,
                 Namespace = new Namespace(assemblyName),
                 GlobalAttribute = new GlobalAttribute($"{assemblyName}.{Constant.DEFAULT_REGISTER_ATTRIBUTE_NAME}"),
-                Usings = new Usings(usings.Distinct()),
-                Register = new Registers(register.Distinct())
+                Usings = new Usings(usings.OfType<IUsing>().Distinct()),
+                Register = new Registers(register.OfType<IRegister>().Distinct()),
+                Decorator = new Registers(register.OfType<IDecorator>().Distinct())
             };
         }
         private GeneratorSource Emit(AttributeMetadata metadata)
-            => metadata.Diagnostic(ReportDiagnostic, CreateGeneratorSource);
+        {
+            var result = _diagnostic.Diagnostic(metadata);
+            return result.Diagnostics.Any()
+                ? ReportDiagnostic(result.Diagnostics)
+                : CreateGeneratorSource(metadata);
+        }
 
         private GeneratorSource ReportDiagnostic(IEnumerable<Diagnostic> diags)
         {
-            diags.Aggregate(_reportDiag, Reducer);
-            return default(GeneratorSource);
-        }
-        private static Action<Diagnostic> Reducer(Action<Diagnostic> reporter, Diagnostic diagnostic)
-        {
-            reporter(diagnostic);
-            return reporter;
+            diags.ToList().ForEach(_context.ReportDiagnostic);
+            return default;
         }
         private GeneratorSource CreateGeneratorSource(AttributeMetadata metadata)
-            => new GeneratorSource(
-                metadata.ClassSyntax.SyntaxTree
+            => new GeneratorSource
+            {
+                Using = metadata.ClassSyntax.SyntaxTree
                     .GetCompilationUnitRoot()
                     .Usings
-                    .Select(@using => new UsingFromSyntax(@using))
+                    .Select(@using => new Using(@using.Name.ToFullString()))
                     .OfType<IUsing>()
-                    .Prepend(new UsingFromString(metadata.Namespace)),
-                ConditionServiceType(metadata));
+                    .Prepend(new Using(metadata.Namespace)),
+                Register = _sourceProvider.Get(metadata)
+            };
 
-
-        private IRegister ConditionServiceType(AttributeMetadata metadata)
-            => string.IsNullOrWhiteSpace(metadata.ServiceType)
-                ? metadata.IsGenericType
-                    ? new ArgumentOfImplementationTypeOnlyRegister(metadata)
-                    : string.IsNullOrWhiteSpace(metadata.MemberName)
-                        ? new GenericImplementationTypeOnlyRegister(metadata)
-                        : (IRegister)new ImplementationInstanceOnlyRegister(metadata)
-                : metadata.IsGenericType
-                    ? new AllArgumentOfTypeRegister(metadata)
-                    : string.IsNullOrWhiteSpace(metadata.MemberName)
-                        ? new AllGenericTypeRegister(metadata)
-                        : (IRegister)new GenericServiceTypeWithInstanceOrFactoryRegoster(metadata);
+        //private IRegister ConditionServiceType(AttributeMetadata metadata)
+        //    => string.IsNullOrWhiteSpace(metadata.ServiceType)
+        //        ? metadata.ClassSyntax.IsGenericType()
+        //            ? new ArgumentOfImplementationTypeOnlyRegister()
+        //            : string.IsNullOrWhiteSpace(metadata.InstanceOrFactory)
+        //                ? new GenericImplementationTypeOnlyRegister()
+        //                : (IRegister)new ImplementationInstanceOnlyRegister()
+        //        : metadata.ClassSyntax.IsGenericType()
+        //            ? new AllArgumentOfTypeRegister()
+        //            : string.IsNullOrWhiteSpace(metadata.InstanceOrFactory)
+        //                ? new AllGenericTypeRegister()
+        //                : (IRegister)new GenericServiceTypeWithInstanceOrFactoryRegoster();
     }
 }
 

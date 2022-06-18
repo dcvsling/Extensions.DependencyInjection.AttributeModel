@@ -2,15 +2,15 @@
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal class ServiceRegisterSourceProvider : ISourceProvider
+    internal class ServiceRegisterSourceProvider : ISource
     {
-
-        
-        public ISourceProvider Usings { get; set; }
-        public ISourceProvider GlobalAttribute { get; set; }
-        public ISourceProvider Namespace { get; set; }
-        public ISourceProvider Register { get; set; }
-
+        public string AttributeName { get; set; }
+        public string InterfaceName { get; set; }
+        public ISource Usings { get; set; }
+        public ISource GlobalAttribute { get; set; }
+        public ISource Namespace { get; set; }
+        public ISource Register { get; set; }
+        public ISource Decorator { get; set; }
 
         public override string ToString()
             => $@"
@@ -21,11 +21,17 @@ namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {Namespace} 
 {{
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true, Inherited = false)]
-    public class {Constant.DEFAULT_REGISTER_ATTRIBUTE_NAME}Attribute : Attribute, IDesignTimeServiceCollectionConfiguration
+    public class {AttributeName}Attribute : Attribute, {InterfaceName}
     {{
         public IServiceCollection ConfigureService(IServiceCollection services)
         {{
             {Register}
+            return services;
+        }}
+
+        public IServiceCollection ConfigureDecorator(IServiceCollection services)
+        {{
+            {Decorator}
             return services;
         }}
     }}

@@ -39,8 +39,16 @@ namespace Extensions.DependencyInjection.Generators
 
         public static DiagnosticDescriptor DG004 = new DiagnosticDescriptor(
             id: "DG004",
-            title: "member should be static method with argument is IServiceProvider",
-            messageFormat: "member should be static method with single argument is IServiceProvider",
+            title: "member should be static method with argument is IServiceProvider and return object",
+            messageFormat: "member should be static method with single argument is IServiceProvider and return type is object",
+            category: "DIGenerator",
+            defaultSeverity: DiagnosticSeverity.Error,
+            isEnabledByDefault: true);
+
+        public static DiagnosticDescriptor DG005 = new DiagnosticDescriptor(
+            id: "DG005",
+            title: "decorator missing decorated service argument in constructor",
+            messageFormat: "decorator must has an {0} type parameter in constructor parameters",
             category: "DIGenerator",
             defaultSeverity: DiagnosticSeverity.Error,
             isEnabledByDefault: true);

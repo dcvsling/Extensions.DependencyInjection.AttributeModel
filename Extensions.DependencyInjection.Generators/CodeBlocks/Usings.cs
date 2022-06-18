@@ -17,12 +17,9 @@ namespace Extensions.DependencyInjection.Generators.CodeBlocks
         }
 
         public override string ToString()
-            => string.Join(Environment.NewLine, _usings.Distinct().Select(x => x.ToString()));
+            => string.Join(Environment.NewLine, _usings.Distinct());
 
         public override IEnumerator<IUsing> GetEnumerator()
-        {
-            return _usings.GetEnumerator();
-        }
-
+            => _usings.GetEnumerator();
     }
 }

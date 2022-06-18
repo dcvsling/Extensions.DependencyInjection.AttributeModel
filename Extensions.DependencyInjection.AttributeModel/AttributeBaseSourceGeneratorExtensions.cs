@@ -6,8 +6,15 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class AttributeBaseSourceGeneratorExtensions
 {
     public static IServiceCollection AddAttributeModelRegister(this IServiceCollection services)
-        => AppDomain.CurrentDomain.GetAssemblies()
+    {
+        var configs = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(x => x.GetCustomAttributes())
             .OfType<IDesignTimeServiceCollectionConfiguration>()
-            .Aggregate(services, (srv, config) => config.ConfigureService(srv));
+            .ToArray();
+
+        configs.Aggregate(services, (srv, config) => config.ConfigureService(srv));
+        configs.Aggregate(services, (srv, config) => config.ConfigureDecorator(srv));
+
+        return services;
+    }        
 }

@@ -1,4 +1,5 @@
-﻿using Extensions.DependencyInjection.Generators.Tests.Builder;
+﻿using Extensions.DependencyInjection.Generators.Diagnostics;
+using Extensions.DependencyInjection.Generators.Tests.Builder;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -14,27 +15,35 @@ namespace Extensions.DependencyInjection.Generators.Tests.Diagnostic;
 public partial class DiagnosticTests
 {
     [Theory]
-    [MemberData(nameof(DIGEN01))]
-    public void Generate_DIGEN01(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
+    [MemberData(nameof(DG001))]
+    public void Generate_DG001(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     [Theory]
-    [MemberData(nameof(DIGEN02))]
-    public void Generate_DIGEN02(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
+    [MemberData(nameof(DG002))]
+    public void Generate_DG002(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     [Theory]
-    [MemberData(nameof(DIGEN03))]
-    public void Generate_DIGEN03(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
+    [MemberData(nameof(DG003))]
+    public void Generate_DG003(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
     [Theory]
-    [MemberData(nameof(DIGEN04))]
-    public void Generate_DIGEN04(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
+    [MemberData(nameof(DG004))]
+    public void Generate_DG004(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
         => TestBase(descs, modules);
+
+    [Theory]
+    [MemberData(nameof(DG005))]
+    public void Generate_DG005(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
+        => TestBase(descs, modules);
+
+
     private static void TestBase(DiagnosticDescriptor[] descs, IEnumerable<Module> modules)
     {
         var compiler = CSharpCompilation.Create("A.dll", modules.Select(x => CSharpSyntaxTree.ParseText(x)));
         var generator = new DependencyRegisterGenerator();
         (var diags, var result) = RoslynTestUtils.RunGenerator(compiler, generator);
         Assert.NotEmpty(diags);
+        
         Assert.Collection(
             diags.Select(x => x.Descriptor).Zip(descs, (actual, expect) => (actual, expect)),
             data => Assert.Equal(data.expect.Id, data.actual.Id));

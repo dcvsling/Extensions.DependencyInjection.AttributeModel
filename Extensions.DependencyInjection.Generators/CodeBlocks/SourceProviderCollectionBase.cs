@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal abstract class SourceProviderCollectionBase<T> : IEnumerable<T> where T : class, ISourceProvider
+    internal abstract class SourceProviderCollectionBase<T> : IEnumerable<T> where T : class, ISource
     {
         public override bool Equals(object obj)
            => obj.GetHashCode() == GetHashCode();

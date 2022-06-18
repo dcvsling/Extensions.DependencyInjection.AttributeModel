@@ -1,7 +1,4 @@
-﻿using Extensions.DependencyInjection.Generators;
-using Extensions.DependencyInjection.Generators.CodeBlocks;
-
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -47,8 +44,9 @@ namespace Extensions.DependencyInjection.Generators
                 yield return x;
             }
         }
-        public static bool IsInjectAttribute(this string name)
-            => Constant.ATTRIBUTE_NAMES.Contains(name);
+        public static bool IsNameMatch(this AttributeSyntax attr, IEnumerable<string> names)
+            => names.Contains(attr.Name.ToFullString().Trim());
+
         public static TParent GetParentNode<TParent>(this SyntaxNode syntax) where TParent : SyntaxNode
             => syntax?.Parent is TParent parent ? parent : syntax.Parent?.GetParentNode<TParent>();
 
@@ -61,7 +59,7 @@ namespace Extensions.DependencyInjection.Generators
 
         
         public static bool HasModifierByKinds(this SyntaxTokenList tokens, params SyntaxKind[] kinds)
-               => tokens.Select(x => x.Kind()).Intersect(kinds).Count() == kinds.Length;
+            => tokens.Select(x => x.Kind()).Intersect(kinds).Count() == kinds.Length;
 
         public static MemberDeclarationSyntax GetMemberByName(this ClassDeclarationSyntax syntax, string name)
             => syntax.Members.FirstOrDefault(member => member.GetName() == name);

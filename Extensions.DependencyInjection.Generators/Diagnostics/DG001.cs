@@ -5,28 +5,29 @@ using System.Linq;
 
 namespace Extensions.DependencyInjection.Generators.Diagnostics
 {
-    internal class DG001
+    internal class DG001 : IDiagnosticHandler
     {
-        public static bool Valid(AttributeMetadata metadata, Action<Diagnostic> callback)
-            => ShouldValid(metadata)
-                && !InternalValid(metadata)
-                && SetDiagnostic(metadata, callback);
+        public ValidateResult Valid(AttributeMetadata metadata)
+            => new ValidateResult
+            {
+                Metadata = metadata,
+                Diagnostic = ShouldValid(metadata) && !InternalValid(metadata)
+                    ? SetDiagnostic(metadata)
+                    : default
+            };
 
         public static bool ShouldValid(AttributeMetadata metadata)
-            => !string.IsNullOrWhiteSpace(metadata.MemberName);
+            => !string.IsNullOrWhiteSpace(metadata.InstanceOrFactory);
 
 
         private static bool InternalValid(AttributeMetadata metadata)
             => metadata.ClassSyntax.Members.Any(
-                member => member.GetName() == metadata.MemberName);
+                member => member.GetName() == metadata.InstanceOrFactory);
 
-        private static bool SetDiagnostic(AttributeMetadata metadata, Action<Diagnostic> callback)
-        {
-            callback(Diagnostic.Create(
+        private static Diagnostic SetDiagnostic(AttributeMetadata metadata)
+            => Diagnostic.Create(
                 DiagnosticDescriptors.DG001,
-                metadata.AttributeSyntax.GetArgumentByName("MemberName").GetLocation(),
-                metadata.MemberName));
-            return true;
-        }
+                metadata.AttributeSyntax.GetArgumentByName(nameof(AttributeMetadata.InstanceOrFactory)).GetLocation(),
+                metadata.InstanceOrFactory);
     }
 }

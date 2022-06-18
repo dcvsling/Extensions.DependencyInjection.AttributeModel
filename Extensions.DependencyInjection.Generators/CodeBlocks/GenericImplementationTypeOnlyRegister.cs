@@ -7,7 +7,7 @@
         public GenericImplementationTypeOnlyRegister(AttributeMetadata metadata)
         {
             _metadata = metadata;
-        }
+        }        
         public override string ToString()
             => $@"services.Add{_metadata.Lifetime}<{_metadata.ImplementationType.UnwrapTypeOf()}>();";
     }

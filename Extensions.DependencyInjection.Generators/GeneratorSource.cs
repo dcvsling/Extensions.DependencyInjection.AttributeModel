@@ -7,13 +7,7 @@ namespace Extensions.DependencyInjection.Generators
 {
     internal class GeneratorSource
     {
-        public GeneratorSource(IEnumerable<IUsing> @using, IRegister register)
-        {
-            Using = @using;
-            Register = register;
-        }
-
-        public IEnumerable<IUsing> Using { get; }
-        public IRegister Register { get; }
+        public IEnumerable<ISource> Using { get; set; }
+        public ISource Register { get; set; }
     }
 }

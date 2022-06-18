@@ -1,12 +1,13 @@
 <Project>
   <PropertyGroup>
     <PackageId>$(AssemblyName)</PackageId>
-    <Version Condition="$(Version) == ''">0.1.2</Version>
+    <Version Condition="$(Version) == ''">0.1.5</Version>
 	<VersionSuffix Condition="$(VersionSuffix) == ''">0001</VersionSuffix>
     <Authors>Kevin Cheng</Authors>
     <Company>Freelance</Company>
     <PackageDescription>dotnet di register by attribute plugin</PackageDescription>
     <RepositoryUrl>https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel</RepositoryUrl>
+	<PackageProjectUrl>https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel</PackageProjectUrl>
   </PropertyGroup>
 
 </Project>

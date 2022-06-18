@@ -17,7 +17,7 @@ public class ModuleTests
                     {
                         new ("Inject") {
                             Parameters = {
-                                AttributeParameter.Singleton
+                                Parameter.Singleton
                             }
                         }
                     }
@@ -35,6 +35,7 @@ namespace MyLib.Models.Model1;
 [Inject(Lifetime = ServiceLifetime.Singleton)]
 public class UnitTest1
 {
+
 
 }";
 }

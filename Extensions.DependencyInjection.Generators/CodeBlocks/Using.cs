@@ -2,11 +2,11 @@
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal class UsingFromString : SourceProviderBase, IUsing
+    internal class Using : SourceProviderBase, IUsing
     {
         private readonly string _path;
 
-        public UsingFromString(string path)
+        public Using(string path)
         {
             _path = path;
         }

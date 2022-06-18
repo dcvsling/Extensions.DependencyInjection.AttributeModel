@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal class Namespace : ISourceProvider
+    internal class Namespace : ISource
     {
         private readonly string _namespace;
 
@@ -16,7 +16,7 @@ namespace Extensions.DependencyInjection.Generators.CodeBlocks
         {
             _namespace = @namespace;
         }
-        public override string ToString()
+        public string Render(AttributeMetadata _)
             => $@"namespace {_namespace}"; 
     }
 }

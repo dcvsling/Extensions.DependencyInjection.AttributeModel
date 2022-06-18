@@ -2,7 +2,7 @@
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    internal abstract class SourceProviderBase : ISourceProvider
+    internal abstract class SourceProviderBase : ISource
     {
         public override int GetHashCode()
             => ToString().GetHashCode();
