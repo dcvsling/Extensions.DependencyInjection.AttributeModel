@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{36CECF64
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		README.md = README.md
 	EndProjectSection
@@ -40,10 +41,6 @@ Global
 		{BBF622D3-8929-4CCF-AA0C-92CF9CF0B98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BBF622D3-8929-4CCF-AA0C-92CF9CF0B98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BBF622D3-8929-4CCF-AA0C-92CF9CF0B98E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E31BB71-7135-4E50-98D7-6907C1EEA682}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

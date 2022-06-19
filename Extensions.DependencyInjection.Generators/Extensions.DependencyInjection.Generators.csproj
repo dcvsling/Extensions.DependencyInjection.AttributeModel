@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<AssemblyNameSuffix>Extensions.DependencyInjection.SourceGenerators</AssemblyNameSuffix>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
