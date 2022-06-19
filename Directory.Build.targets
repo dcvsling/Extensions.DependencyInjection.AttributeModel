@@ -6,6 +6,6 @@
 		<_suffix Condition="$(_subStringIndex) >= 0">$(AssemblyName.Substring($(_suffixFrom))</_suffix>
 		<_suffix Condition="$(_subStringIndex) &lt; 0">$(AssemblyName)</_suffix>
 		<AssemblyNameSuffix Condition="$(AssemblyNameSuffix) == ''">$(_suffix)</AssemblyNameSuffix>
-		<AssemblyName>$(AssemblyNamePrefix).$(AssemblyNameSuffix)</AssemblyName>
+		<AssemblyName Condition="$(IsPackable) != 'false'">$(AssemblyNamePrefix).$(AssemblyNameSuffix)</AssemblyName>
 	</PropertyGroup>
 </Project>
