@@ -1,0 +1,11 @@
+<Project>
+	<PropertyGroup>
+		<AssemblyNamePrefix Condition="$(AssemblyNamePrefix) == ''">$(SolutionName)</AssemblyNamePrefix>
+		<_subStringIndex>$(AssemblyName.IndexOf('.'))</_subStringIndex>
+		<_suffixFrom>$(_subStringIndex) - 1)</_suffixFrom>
+		<_suffix Condition="$(_subStringIndex) >= 0">$(AssemblyName.Substring($(_suffixFrom))</_suffix>
+		<_suffix Condition="$(_subStringIndex) &lt; 0">$(AssemblyName)</_suffix>
+		<AssemblyNameSuffix Condition="$(AssemblyNameSuffix) == ''">$(_suffix)</AssemblyNameSuffix>
+		<AssemblyName Condition="$(IsPackable) != 'false'">$(AssemblyNamePrefix).$(AssemblyNameSuffix)</AssemblyName>
+	</PropertyGroup>
+</Project>

@@ -14,7 +14,7 @@ namespace Extensions.DependencyInjection.Generators.Tests.Diagnostic;
 public partial class NotToDiagnosticTests
 {
     [Theory]
-    [MemberData("DIGEN01")]
+    [MemberData(nameof(DIGEN01))]
     public void Generate_DIGEN01(IEnumerable<Module> modules)
         => TestBase(modules);
     //[Theory]

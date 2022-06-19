@@ -9,13 +9,17 @@ public static class AttributeBaseSourceGeneratorExtensions
     {
         if (services.Any(x => x.ImplementationInstance?.Equals(Markup.Instance) ?? false))
             return services;
-        AppDomain.CurrentDomain.GetAssemblies()
+        var configs = AppDomain.CurrentDomain.GetAssemblies()
             .SelectMany(x => x.GetCustomAttributes())
             .OfType<IDesignTimeServiceCollectionConfiguration>()
-            .Aggregate(services, (srv, config) => config.ConfigureService(srv));
+            .ToArray();
+
+        configs.Aggregate(services, (srv, config) => config.ConfigureService(srv));
+        configs.Aggregate(services, (srv, config) => config.ConfigureDecorator(srv));
+
         services.Insert(0, ServiceDescriptor.Singleton(Markup.Instance));
         return services;
-    }
+    }        
 
     private class Markup
     {

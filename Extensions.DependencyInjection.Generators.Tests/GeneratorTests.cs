@@ -1,3 +1,4 @@
+using Extensions.DependencyInjection.Generators.Abstractions;
 using Extensions.DependencyInjection.Generators.Tests.Builder;
 
 using Microsoft.CodeAnalysis;
@@ -7,6 +8,7 @@ using SourceGenerators.Tests;
 
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using Xunit;
 
@@ -14,43 +16,43 @@ namespace Extensions.DependencyInjection.Generators.Tests;
 public partial class GeneratorTests
 {
     [Theory]
-    [MemberData("Singleton")]
-    public void Generate_Singelton(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(Singleton))]
+    public void Generate_Singelton(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
 
     [Theory]
-    [MemberData("Scoped")]
-    public void Generate_Scoped(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(Scoped))]
+    public void Generate_Scoped(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
     [Theory]
-    [MemberData("Transient")]
-    public void Generate_Transient(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(Transient))]
+    public void Generate_Transient(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
     [Theory]
-    [MemberData("WithServiceType")]
-    public void Generate_WithServiceType(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(WithServiceType))]
+    public void Generate_WithServiceType(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
     [Theory]
-    [MemberData("OpenGeneric")]
-    public void Generate_OpenGeneric(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(OpenGeneric))]
+    public void Generate_OpenGeneric(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
     [Theory]
-    [MemberData("OpenGenericWithServiceType")]
-    public void Generate_OpenGenericWithServiceType(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(OpenGenericWithServiceType))]
+    public void Generate_OpenGenericWithServiceType(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
 
     [Theory]
-    [MemberData("LifetimeAttribute")]
-    public void Generate_LifetimeAttribute(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(LifetimeAttribute))]
+    public void Generate_LifetimeAttribute(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
 
     [Theory]
-    [MemberData("ExternalUsingDirectives")]
-    public void External_Using_Directives(IEnumerable<Module> modules, GenerateContext expect)
+    [MemberData(nameof(ExternalUsingDirectives))]
+    public void External_Using_Directives(IEnumerable<Module> modules, StringSourceProvider expect)
         => TestBase(modules, expect);
 
 
-    private static void TestBase(IEnumerable<Module> modules, GenerateContext expect)
+    private static void TestBase(IEnumerable<Module> modules, StringSourceProvider expect)
     {
         var trees = modules.Select(x => CSharpSyntaxTree.ParseText(x));
         var compiler = CSharpCompilation.Create(expect.Namespace, trees);
@@ -60,20 +62,4 @@ public partial class GeneratorTests
         Assert.Equal(expect.ToString(), result[0].SourceText.ToString());
         //CompileSource(trees.Concat(result.Select(x => CSharpSyntaxTree.ParseText(x.SourceText))));
     }
-
-    //private static void CompileSource(IEnumerable<SyntaxTree> trees)
-    //    => Assert.Empty(
-    //        CSharpCompilation.Create(
-    //        "testing",
-    //        trees,
-    //        new[] {
-    //            typeof(InjectAttribute),
-    //            typeof(object),
-    //            typeof(IServiceCollection),
-    //            typeof(Enumerable)
-    //        }.Select(type => MetadataReference.CreateFromFile(type.Assembly.Location))
-    //            .ToArray(),
-    //        new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-    //            .WithMetadataReferenceResolver()
-    //            .GetDiagnostics());
 }

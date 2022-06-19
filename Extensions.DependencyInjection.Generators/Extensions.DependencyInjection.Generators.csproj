@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<AssemblyNameSuffix>Extensions.DependencyInjection.SourceGenerators</AssemblyNameSuffix>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
 		<IncludeBuildOutput>true</IncludeBuildOutput>
@@ -9,10 +10,12 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<AutoIncrementPackageRevision>true</AutoIncrementPackageRevision>
 		<UsingToolXliff>true</UsingToolXliff>
+		<EnableNETAnalyzers>False</EnableNETAnalyzers>
+		<EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 	<ItemGroup>
 		<AdditionalFiles Include="AnalyzerReleases.Shipped.md" />
 		<AdditionalFiles Include="AnalyzerReleases.Unshipped.md" />
-		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.1.0" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.2.0" PrivateAssets="all" />
 	</ItemGroup>
 </Project>

@@ -18,16 +18,15 @@ public partial class GeneratorTests
                     {
                         new Class("A")
                         {
-                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { AttributeParameter.Singleton } } }
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { Parameter.Singleton } } }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddSingleton<A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddSingleton<A>();" },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -43,16 +42,15 @@ public partial class GeneratorTests
                     {
                         new Class("A")
                         {
-                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { AttributeParameter.Scoped } } }
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { Parameter.Scoped } } }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddScoped<A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddScoped<A>();" },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -68,16 +66,15 @@ public partial class GeneratorTests
                     {
                         new Class("A")
                         {
-                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { AttributeParameter.Transient } } }
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = { Parameter.Transient } } }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddTransient<A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddTransient<A>();" },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -101,38 +98,37 @@ public partial class GeneratorTests
                         {
                             Interfaces = { "IA" },
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Singleton,
-                                    AttributeParameter.ServiceType("IA"),
+                                    Parameter.Singleton,
+                                    Parameter.ServiceType("IA"),
                                 } } }
                         },
                         new Class("B")
                         {
                             Interfaces = { "IB" },
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Scoped,
-                                    AttributeParameter.ServiceType("IB"),
+                                    Parameter.Scoped,
+                                    Parameter.ServiceType("IB"),
                                 } } }
                         },
                         new Class("C")
                         {
                             Interfaces = { "IC" },
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Transient,
-                                    AttributeParameter.ServiceType("IC"),
+                                    Parameter.Transient,
+                                    Parameter.ServiceType("IC"),
                                 } } }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = {
+            new StringSourceProvider {
+                Register = {
                     "services.AddSingleton<IA, A>();",
                     "services.AddScoped<IB, B>();",
-                    "services.AddTransient<IC, C>();",
+                    "services.AddTransient<IC, C>();"
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -143,39 +139,39 @@ public partial class GeneratorTests
             new Module[]
             {
                 new Module("a.cs", "A.Models")
-        {
-            Classes =
-                    {
-                new Class(new TypeName("A") { TypeParameters = { "T" } })
                 {
-                    CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Singleton,
+                    Classes =
+                            {
+                        new Class(new TypeName("A") { TypeParameters = { "T" } })
+                        {
+                            CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
+                                        Parameter.Singleton,
                                     } } }
-                },
+                        },
                         new Class(new TypeName("B") { TypeParameters = { "T", "T2" } })
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Scoped,
+                                        Parameter.Scoped,
                                     } } }
                         },
                         new Class(new TypeName("C") { TypeParameters = { "T", "T2", "T3" } })
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Transient,
+                                        Parameter.Transient,
                                     } } }
                         }
                     }
                 }
             },
-        new GenerateContext {
-                Sources = {
+        new StringSourceProvider {
+                Register = {
                     "services.AddSingleton(typeof(A<>));",
                     "services.AddScoped(typeof(B<,>));",
                     "services.AddTransient(typeof(C<,,>));",
+
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
     }
 };
@@ -199,38 +195,37 @@ public partial class GeneratorTests
                     {
                         Interfaces = { "IA<T>" },
                         CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Singleton,
-                                    AttributeParameter.ServiceType("IA<>")
+                                    Parameter.Singleton,
+                                    Parameter.ServiceType("IA<>")
                                 } } }
                     },
                     new Class(new TypeName("B") { TypeParameters = { "T", "T2" } })
                     {
                         Interfaces = { "IB<T, T2>" },
                         CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Scoped,
-                                    AttributeParameter.ServiceType("IB<,>")
+                                    Parameter.Scoped,
+                                    Parameter.ServiceType("IB<,>")
                                 } } }
                     },
                     new Class(new TypeName("C") { TypeParameters = { "T", "T2", "T3" } })
                     {
                         Interfaces = { "IC<T, T2, T3>" },
                         CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                    AttributeParameter.Transient,
-                                    AttributeParameter.ServiceType("IC<,,>")
+                                    Parameter.Transient,
+                                    Parameter.ServiceType("IC<,,>")
                                 } } }
                     }
                 }
             }
         },
-        new GenerateContext {
-                Sources = {
+        new StringSourceProvider {
+                Register = {
                     "services.AddSingleton(typeof(IA<>), typeof(A<>));",
                     "services.AddScoped(typeof(IB<,>), typeof(B<,>));",
-                    "services.AddTransient(typeof(IC<,,>), typeof(C<,,>));",
+                    "services.AddTransient(typeof(IC<,,>), typeof(C<,,>));"
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -248,17 +243,17 @@ public partial class GeneratorTests
                         new Class("A")
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Singleton,
-                                        AttributeParameter.FromInstance,
+                                        Parameter.Singleton,
+                                        Parameter.FromInstance,
                                     } } },
                             Members = { Property.CreateInstance("A") }
                         },
                         new Class("B")
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Scoped,
-                                        AttributeParameter.ServiceType("IB"),
-                                        AttributeParameter.FromFactory,
+                                        Parameter.Scoped,
+                                        Parameter.ServiceType("IB"),
+                                        Parameter.FromFactory,
                                     } } },
                             Interfaces = { "IB" },
                             Members = { Method.CreateFactory("IB") }
@@ -266,23 +261,22 @@ public partial class GeneratorTests
                         new Class("C")
                         {
                             CustomAttributes = { new CustomAttribute("Inject") { Parameters = {
-                                        AttributeParameter.Transient,
-                                        AttributeParameter.FromFactory,
+                                        Parameter.Transient,
+                                        Parameter.FromFactory,
                                     } } },
                             Members = { Method.CreateFactory("C") }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = {
+            new StringSourceProvider {
+                Register = {
                     "services.AddSingleton(A.Instance);",
                     "services.AddScoped<IB>(B.Factory);",
-                    "services.AddTransient(C.Factory);",
+                    "services.AddTransient(C.Factory);"
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -306,35 +300,34 @@ public partial class GeneratorTests
                         {
                             Interfaces = { "IA" },
                             CustomAttributes = { new CustomAttribute("Singleton") { Parameters = {
-                                    AttributeParameter.ServiceType("IA"),
+                                    Parameter.ServiceType("IA"),
                                 } } }
                         },
                         new Class("B")
                         {
                             Interfaces = { "IB" },
                             CustomAttributes = { new CustomAttribute("Scoped") { Parameters = {
-                                    AttributeParameter.ServiceType("IB"),
+                                    Parameter.ServiceType("IB"),
                                 } } }
                         },
                         new Class("C")
                         {
                             Interfaces = { "IC" },
                             CustomAttributes = { new CustomAttribute("Transient") { Parameters = {
-                                    AttributeParameter.ServiceType("IC"),
+                                    Parameter.ServiceType("IC"),
                                 } } }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = {
+            new StringSourceProvider {
+                Register = {
                     "services.AddSingleton<IA, A>();",
                     "services.AddScoped<IB, B>();",
-                    "services.AddTransient<IC, C>();",
+                    "services.AddTransient<IC, C>();",                    
                 },
                 Usings = { "A.Models" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
@@ -356,19 +349,18 @@ public partial class GeneratorTests
                         {
                             CustomAttributes = { new CustomAttribute("Inject") {
                                 Parameters = {
-                                    AttributeParameter.Singleton,
-                                    AttributeParameter.ServiceType("IB")
+                                    Parameter.Singleton,
+                                    Parameter.ServiceType("IB")
                                 } } },
                             Interfaces = { "IB" }
                         }
                     }
                 }
             },
-            new GenerateContext {
-                Sources = { "services.AddSingleton<IB, A>();" },
+            new StringSourceProvider {
+                Register = { "services.AddSingleton<IB, A>();" },
                 Usings = { "A.Models", "B.Abstractions" },
-                Namespace = "A",
-                HintName = "a.cs"
+                Namespace = "A"
             }
         }
     };
