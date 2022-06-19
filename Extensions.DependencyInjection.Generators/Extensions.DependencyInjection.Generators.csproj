@@ -12,6 +12,9 @@
 		<UsingToolXliff>true</UsingToolXliff>
 		<EnableNETAnalyzers>False</EnableNETAnalyzers>
 		<EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+		<IsRoslynComponent>true</IsRoslynComponent>
+		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+		<CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
 	</PropertyGroup>
 	<ItemGroup>
 		<AdditionalFiles Include="AnalyzerReleases.Shipped.md" />

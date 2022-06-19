@@ -35,7 +35,10 @@ namespace Extensions.DependencyInjection.Generators
             (var usings, var register) = injects.Select(Emit)
                 .OfType<GeneratorSource>()
                 .Aggregate(
-                    (usings: Enumerable.Empty<ISource>(), register: Enumerable.Empty<ISource>()),
+                    (
+                        usings: Constant.DEFAULT_USINGS.Select(x => new Using(x)).OfType<ISource>(), 
+                        register: Enumerable.Empty<ISource>()
+                    ),
                     (ctx, content) => (
                         usings: ctx.usings.Union(content.Using),
                         register: ctx.register.Append<ISource>(content.Register)));
