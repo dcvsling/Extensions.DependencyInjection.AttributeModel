@@ -1,4 +1,4 @@
-# Extensions.DependencyInjection.AttributeModel
+# AttributeModel.Extensions.DependencyInjection
 
 [![.NET](https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel/actions/workflows/dotnet.yml)
 
@@ -14,14 +14,9 @@
 
 在安裝的專案目錄下輸入指令
 ```cmd
-dotnet add package Extensions.DependencyInjection.AttributeModel -s https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json
+dotnet add package Extensions.DependencyInjection.AttributeModel
 ```
 
-或是透過 visual studio 加入下方連結到 nuget 來源就可以透過內建的工具搜尋
-```url
-https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json
-```
-接著請安裝 ```Extensions.DependencyInjection.AttributeModel``` 即可
 
 ### 使用
 
@@ -82,7 +77,7 @@ public void ConfigureService(IServiceCollection services)
 不過由於 dotnet 的 DI 註冊方式已經盡可能地避免這件事情發生
 以及目前也已經實現一種做法來提供這部分的需求
 
-### Hint
+### 提示
 
 所有註冊容器所使用的各式自定義的方法  
 都離不開最初提供的那幾個註冊方式
@@ -109,3 +104,14 @@ public class MyOptionsConfigureOptions : IConfigureOptions<MyOptions>
 	}
 }
 ```
+
+## 版本
+
+### 0.1.5
+
+#### 註冊裝飾器
+
+在這個版本中引用了套件 ```Scrutor```  
+透過此套件的裝飾器功能  
+現在可以透過 ```Decorator``` 屬性來註冊裝飾器  
+
