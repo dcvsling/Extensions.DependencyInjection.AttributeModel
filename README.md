@@ -14,7 +14,7 @@
 
 在安裝的專案目錄下輸入指令
 ```cmd
-dotnet add package Extensions.DependencyInjection.AttributeModel
+dotnet add package AttributeModel.Extensions.DependencyInjection
 ```
 
 
@@ -48,7 +48,7 @@ public void ConfigureService(IServiceCollection services)
 
 ### 流程
 
-簡單說明一下其內部運作方式 (it's not magic)
+簡單說明一下其內部運作方式
 
 1. 運用 SourceGenerator 中的分析器分析 Attribute 並將其轉換成為相對應的容器註冊的程式碼
 1. 將產生的程式碼寫在一個由當下 AssemblyId 的 Namespace 下名為 ServiceRegistryAttribute 的類別中
@@ -107,7 +107,7 @@ public class MyOptionsConfigureOptions : IConfigureOptions<MyOptions>
 
 ## 版本
 
-### 0.1.5
+### 0.2.0
 
 #### 註冊裝飾器
 
@@ -115,3 +115,33 @@ public class MyOptionsConfigureOptions : IConfigureOptions<MyOptions>
 透過此套件的裝飾器功能  
 現在可以透過 ```Decorator``` 屬性來註冊裝飾器  
 
+```csharp
+
+public interface IA 
+{
+    void Invoke();
+}
+
+[Decorator(serviceType = typeof(IA))]
+public class A : IA 
+{
+    private readonly IA _a;
+    public A(IA a) 
+    {  
+        _a = a;
+    } 
+    public void Invoke() 
+    { 
+        _a.Invoke()
+    }
+}
+
+```
+
+由於 ```Scrutor``` 的裝飾器做法  
+必須在裝飾器註冊之前註冊被裝飾類別
+這個困境在這裡將會被有效的解決
+裝飾器將會在所有其他透過 Attribute 進行的註冊之後  
+才會開始註冊裝飾器
+但如果需要保證註冊成功  
+亦需要於將 `AddAttributeModelRegister` 方法於最後註冊

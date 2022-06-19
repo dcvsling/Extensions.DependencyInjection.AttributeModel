@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<AssemblyNamePrefix>AttributeModel</AssemblyNamePrefix>
 		<PackageId>$(AssemblyName)</PackageId>
-		<Version Condition="$(Version) == ''">0.1.5</Version>
+		<Version Condition="$(Version) == ''">0.2.0</Version>
 		<VersionSuffix Condition="$(VersionSuffix) == ''">0001</VersionSuffix>
 		<Authors>Kevin Cheng</Authors>
 		<Company>Freelance</Company>
