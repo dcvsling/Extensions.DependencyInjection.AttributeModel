@@ -16,7 +16,7 @@ namespace Extensions.DependencyInjection.Generators.CodeBlocks
         {
             _namespace = @namespace;
         }
-        public string Render(AttributeMetadata _)
-            => $@"namespace {_namespace}"; 
+        public override string ToString()
+           => $@"namespace {_namespace}"; 
     }
 }

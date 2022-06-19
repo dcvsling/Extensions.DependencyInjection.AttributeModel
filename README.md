@@ -1,4 +1,4 @@
-# Extensions.DependencyInjection.AttributeModel
+# AttributeModel.Extensions.DependencyInjection
 
 [![.NET](https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel/actions/workflows/dotnet.yml/badge.svg)](https://github.com/dcvsling/Extensions.DependencyInjection.AttributeModel/actions/workflows/dotnet.yml)
 
@@ -14,14 +14,9 @@
 
 在安裝的專案目錄下輸入指令
 ```cmd
-dotnet add package Extensions.DependencyInjection.AttributeModel -s https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json
+dotnet add package AttributeModel.Extensions.DependencyInjection
 ```
 
-或是透過 visual studio 加入下方連結到 nuget 來源就可以透過內建的工具搜尋
-```url
-https://pkgs.dev.azure.com/dcvsling/DotNetPlugins/_packaging/dotnet_plugins/nuget/v3/index.json
-```
-接著請安裝 ```Extensions.DependencyInjection.AttributeModel``` 即可
 
 ### 使用
 
@@ -53,7 +48,7 @@ public void ConfigureService(IServiceCollection services)
 
 ### 流程
 
-簡單說明一下其內部運作方式 (it's not magic)
+簡單說明一下其內部運作方式
 
 1. 運用 SourceGenerator 中的分析器分析 Attribute 並將其轉換成為相對應的容器註冊的程式碼
 1. 將產生的程式碼寫在一個由當下 AssemblyId 的 Namespace 下名為 ServiceRegistryAttribute 的類別中
@@ -82,7 +77,7 @@ public void ConfigureService(IServiceCollection services)
 不過由於 dotnet 的 DI 註冊方式已經盡可能地避免這件事情發生
 以及目前也已經實現一種做法來提供這部分的需求
 
-### Hint
+### 提示
 
 所有註冊容器所使用的各式自定義的方法  
 都離不開最初提供的那幾個註冊方式
@@ -109,3 +104,44 @@ public class MyOptionsConfigureOptions : IConfigureOptions<MyOptions>
 	}
 }
 ```
+
+## 版本
+
+### 0.2.0
+
+#### 註冊裝飾器
+
+在這個版本中引用了套件 ```Scrutor```  
+透過此套件的裝飾器功能  
+現在可以透過 ```Decorator``` 屬性來註冊裝飾器  
+
+```csharp
+
+public interface IA 
+{
+    void Invoke();
+}
+
+[Decorator(serviceType = typeof(IA))]
+public class A : IA 
+{
+    private readonly IA _a;
+    public A(IA a) 
+    {  
+        _a = a;
+    } 
+    public void Invoke() 
+    { 
+        _a.Invoke()
+    }
+}
+
+```
+
+由於 ```Scrutor``` 的裝飾器做法  
+必須在裝飾器註冊之前註冊被裝飾類別
+這個困境在這裡將會被有效的解決
+裝飾器將會在所有其他透過 Attribute 進行的註冊之後  
+才會開始註冊裝飾器
+但如果需要保證註冊成功  
+亦需要於將 `AddAttributeModelRegister` 方法於最後註冊
