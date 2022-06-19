@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace Extensions.DependencyInjection.Generators.Tests;
 public class StringSourceProvider
 {
-    public ICollection<string> Usings { get; } = new List<string>();
+    public ICollection<string> Usings { get; } = new List<string>(Constant.DEFAULT_USINGS);
     public string GlobalAttribute => $"{Namespace}.{Constant.DEFAULT_REGISTER_ATTRIBUTE_NAME}";
     public string Namespace { get; set; } = "Extensions.DependencyInjection.AttributeModel";
     public ICollection<string> Register { get; } = new List<string>();
