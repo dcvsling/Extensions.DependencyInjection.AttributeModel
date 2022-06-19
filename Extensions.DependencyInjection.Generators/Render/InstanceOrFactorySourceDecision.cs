@@ -17,7 +17,7 @@ namespace Extensions.DependencyInjection.Generators.Render
         private IEnumerable<Type> CandidateTypes
             => new[]{
                 typeof(GenericServiceTypeWithInstanceOrFactoryRegoster),
-                typeof(GenericWithInstanceOrFactoryDecorator) 
+                typeof(GenericWithInstanceOrFactoryDecorate) 
             };
     }
 }

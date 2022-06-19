@@ -13,18 +13,18 @@ namespace Extensions.DependencyInjection.Generators.Render
             => new SourceProvider(
                 new ISourceDecision[]
                 {
-                    new DecoratorSourceDecision(),
+                    new DecorateSourceDecision(),
                     new InstanceOrFactorySourceDecision(),
                     new OpenGenericSourceDecision(),
                     new NoServiceTypeSourceDecision()
                 },
                 new Type[]
                 {
-                    typeof(AllGenericDecorator),
-                    typeof(AllArgumentDecorator),
+                    typeof(AllGenericDecorate),
+                    typeof(AllArgumentDecorate),
                     typeof(AllArgumentOfTypeRegister),
                     typeof(AllGenericTypeRegister),
-                    typeof(GenericWithInstanceOrFactoryDecorator),
+                    typeof(GenericWithInstanceOrFactoryDecorate),
                     typeof(ArgumentOfImplementationTypeOnlyRegister),
                     typeof(GenericImplementationTypeOnlyRegister),
                     typeof(GenericServiceTypeWithInstanceOrFactoryRegoster),

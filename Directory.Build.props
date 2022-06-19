@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<AssemblyNamePrefix>AttributeModel</AssemblyNamePrefix>
 		<PackageId>$(AssemblyName)</PackageId>
-		<Version Condition="$(Version) == ''">0.2.1</Version>
+		<Version Condition="$(Version) == ''">0.2.2</Version>
 		<VersionSuffix Condition="$(VersionSuffix) == ''">0001</VersionSuffix>
 		<Authors>Kevin Cheng</Authors>
 		<Company>Freelance</Company>
@@ -13,8 +13,10 @@
 
 	<PropertyGroup Condition="$(IsPackable) != 'false'">
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	</PropertyGroup>
 	<ItemGroup Condition="$(IsPackable) != 'false'">
-		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="\"></None>
+		<None Include="$(SolutionDir)README.md" Pack="true" PackagePath="" />
+		<None Include="$(SolutionDir)LICENSE" Pack="true" PackagePath=""/>
 	</ItemGroup>
 </Project>

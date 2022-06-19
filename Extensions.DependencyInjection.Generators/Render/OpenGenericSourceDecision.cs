@@ -20,7 +20,7 @@ namespace Extensions.DependencyInjection.Generators.Render
         private IEnumerable<Type> CandidateTypes
             => new[]{
                 typeof(ArgumentOfImplementationTypeOnlyRegister),
-                typeof(AllArgumentDecorator),
+                typeof(AllArgumentDecorate),
                 typeof(AllArgumentOfTypeRegister)
             };
     }

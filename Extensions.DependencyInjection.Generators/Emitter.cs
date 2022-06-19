@@ -50,7 +50,7 @@ namespace Extensions.DependencyInjection.Generators
                 GlobalAttribute = new GlobalAttribute($"{assemblyName}.{Constant.DEFAULT_REGISTER_ATTRIBUTE_NAME}"),
                 Usings = new Usings(usings.OfType<IUsing>().Distinct()),
                 Register = new Registers(register.OfType<IRegister>().Distinct()),
-                Decorator = new Registers(register.OfType<IDecorator>().Distinct())
+                Decorator = new Registers(register.OfType<IDecorate>().Distinct())
             };
         }
         private GeneratorSource Emit(AttributeMetadata metadata)
