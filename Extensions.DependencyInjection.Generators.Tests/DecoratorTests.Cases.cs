@@ -57,7 +57,7 @@ public partial class DecoratorTests
                 },
                 Decorator =
                 {
-                    "services.Decorator<IA, DecoratorA>();"
+                    "services.Decorate<IA, DecoratorA>();"
                 },
                 Usings = { "A.Models" },
                 Namespace = "A"
@@ -113,7 +113,7 @@ public partial class DecoratorTests
                 },
                 Decorator =
                 {
-                    "services.Decorator<IA<B>, DecoratorA>();"
+                    "services.Decorate<IA<B>, DecoratorA>();"
                 },
                 Usings = { "A.Models" },
                 Namespace = "A"
@@ -168,7 +168,7 @@ public partial class DecoratorTests
                 },
                 Decorator =
                 {
-                    "services.Decorator(typeof(IA<>), typeof(DecoratorA<>));"
+                    "services.Decorate(typeof(IA<>), typeof(DecoratorA<>));"
                 },
                 Usings = { "A.Models" },
                 Namespace = "A"

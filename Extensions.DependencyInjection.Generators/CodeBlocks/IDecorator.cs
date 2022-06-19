@@ -2,5 +2,5 @@
 
 namespace Extensions.DependencyInjection.Generators.CodeBlocks
 {
-    public interface IDecorator : ISource { }
+    public interface IDecorate : ISource { }
 }
